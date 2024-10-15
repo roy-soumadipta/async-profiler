@@ -1,5 +1,4 @@
 # ![](https://github.com/roy-soumadipta/async-profiler/blob/readme_restructure/.assets/images/AsyncProfiler.png)
-
 ## About
 
 This project is a low overhead sampling profiler for Java
