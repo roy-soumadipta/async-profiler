@@ -1,4 +1,4 @@
-# ![](https://htmlpreview.github.io/?https://github.com/async-profiler/async-profiler/blob/readme_restructure/.assets/images/AsyncProfiler.png)
+# ![](https://github.com/roy-soumadipta/async-profiler/blob/readme_restructure/.assets/images/AsyncProfiler.png)
 ***
 ## About
 
