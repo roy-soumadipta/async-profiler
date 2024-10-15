@@ -1,4 +1,6 @@
-# async-profiler
+# ![](https://htmlpreview.github.io/?https://github.com/async-profiler/async-profiler/blob/master/.assets/images/AsyncProfiler.png)
+***
+## About
 
 This project is a low overhead sampling profiler for Java
 that does not suffer from [Safepoint bias problem](http://psy-lob-saw.blogspot.ru/2016/02/why-most-sampling-java-profilers-are.html).
@@ -37,6 +39,76 @@ For more information refer to [IntelliJ IDEA documentation](https://www.jetbrain
 |-----------|------------------------------|-------------------------------------------|
 | **Linux** | x64, arm64                   | x86, arm32, ppc64le, riscv64, loongarch64 |
 | **macOS** | x64, arm64                   |                                           |
+
+## Getting started
+
+As of Linux 4.6, capturing kernel call stacks using `perf_events` from a non-root
+process requires setting two runtime variables. You can set them using
+sysctl or as follows:
+
+```
+# sysctl kernel.perf_event_paranoid=1
+# sysctl kernel.kptr_restrict=0
+```
+
+async-profiler works in the context of the target Java application,
+i.e. it runs as an agent in the process being profiled.
+`asprof` is a tool to attach and control the agent.
+
+A typical workflow would be to launch your Java application, attach
+the agent and start profiling, exercise your performance scenario, and
+then stop profiling. The agent's output, including the profiling results, will
+be displayed on the console where you've started `asprof`.
+
+Example:
+
+```
+$ jps
+9234 Jps
+8983 Computey
+$ asprof start 8983
+$ asprof stop 8983
+```
+
+The following may be used in lieu of the `pid` (8983):
+
+- The keyword `jps`, which will use the most recently launched Java process.
+- The application name as it appears in the `jps` output: e.g. `Computey`
+
+Alternatively, you may specify `-d` (duration) argument to profile
+the application for a fixed period of time with a single command.
+
+```
+$ asprof -d 30 8983
+```
+
+By default, the profiling frequency is 100Hz (every 10ms of CPU time).
+Here is a sample of the output printed to the Java application's terminal:
+
+```
+--- Execution profile ---
+Total samples:           687
+Unknown (native):        1 (0.15%)
+
+--- 6790000000 (98.84%) ns, 679 samples
+  [ 0] Primes.isPrime
+  [ 1] Primes.primesThread
+  [ 2] Primes.access$000
+  [ 3] Primes$1.run
+  [ 4] java.lang.Thread.run
+
+... a lot of output omitted for brevity ...
+
+          ns  percent  samples  top
+  ----------  -------  -------  ---
+  6790000000   98.84%      679  Primes.isPrime
+    40000000    0.58%        4  __do_softirq
+
+... more output omitted ...
+```
+
+This indicates that the hottest method was `Primes.isPrime`, and the hottest
+call stack leading to it comes from `Primes.primesThread`.
 
 ## CPU profiling
 
@@ -145,84 +217,6 @@ Here are some useful native methods that you may want to profile:
 * ```G1CollectedHeap::humongous_obj_allocate``` - trace _humongous allocations_ of the G1 GC,
 * ```JVM_StartThread``` - trace creation of new Java threads,
 * ```Java_java_lang_ClassLoader_defineClass1``` - trace class loading.
-
-## Building
-
-Build status: [![Build Status](https://github.com/async-profiler/async-profiler/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/async-profiler/async-profiler/actions/workflows/ci.yml)
-
-Make sure the `JAVA_HOME` environment variable points to your JDK installation,
-and then run `make`. GCC or Clang is required. After building, the profiler binaries
-will be in the `build` subdirectory.
-
-## Basic Usage
-
-As of Linux 4.6, capturing kernel call stacks using `perf_events` from a non-root
-process requires setting two runtime variables. You can set them using
-sysctl or as follows:
-
-```
-# sysctl kernel.perf_event_paranoid=1
-# sysctl kernel.kptr_restrict=0
-```
-
-async-profiler works in the context of the target Java application,
-i.e. it runs as an agent in the process being profiled.
-`asprof` is a tool to attach and control the agent. 
-
-A typical workflow would be to launch your Java application, attach
-the agent and start profiling, exercise your performance scenario, and
-then stop profiling. The agent's output, including the profiling results, will
-be displayed on the console where you've started `asprof`.
-
-Example:
-
-```
-$ jps
-9234 Jps
-8983 Computey
-$ asprof start 8983
-$ asprof stop 8983
-```
-
-The following may be used in lieu of the `pid` (8983):
-
- - The keyword `jps`, which will use the most recently launched Java process.
- - The application name as it appears in the `jps` output: e.g. `Computey`
-
-Alternatively, you may specify `-d` (duration) argument to profile
-the application for a fixed period of time with a single command.
-
-```
-$ asprof -d 30 8983
-```
-
-By default, the profiling frequency is 100Hz (every 10ms of CPU time).
-Here is a sample of the output printed to the Java application's terminal:
-
-```
---- Execution profile ---
-Total samples:           687
-Unknown (native):        1 (0.15%)
-
---- 6790000000 (98.84%) ns, 679 samples
-  [ 0] Primes.isPrime
-  [ 1] Primes.primesThread
-  [ 2] Primes.access$000
-  [ 3] Primes$1.run
-  [ 4] java.lang.Thread.run
-
-... a lot of output omitted for brevity ...
-
-          ns  percent  samples  top
-  ----------  -------  -------  ---
-  6790000000   98.84%      679  Primes.isPrime
-    40000000    0.58%        4  __do_softirq
-
-... more output omitted ...
-```
-
-This indicates that the hottest method was `Primes.isPrime`, and the hottest
-call stack leading to it comes from `Primes.primesThread`.
 
 ## Launching as an Agent
 
@@ -499,6 +493,14 @@ or disable it altogether with `--security-opt seccomp=unconfined` option. In
 addition, `--cap-add SYS_ADMIN` may be required.
 2. You can use "fdtransfer": see the help for `--fdtransfer`.
 3. Last, you may fall back to `-e ctimer` profiling mode, see [Troubleshooting](#troubleshooting).
+
+## Building
+
+Build status: [![Build Status](https://github.com/async-profiler/async-profiler/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/async-profiler/async-profiler/actions/workflows/ci.yml)
+
+Make sure the `JAVA_HOME` environment variable points to your JDK installation,
+and then run `make`. GCC or Clang is required. After building, the profiler binaries
+will be in the `build` subdirectory.
 
 ## Restrictions/Limitations
 
