@@ -71,6 +71,10 @@ The various colours in a FlameGraph output with their relation to
 underlying code for a Java application:
 
 * $\color{green}{green\ }\color{white}{:\ JIT}$
+* $\color{aquamarine}{aqua\ }\color{white}{:\ inlined}$
+* $\color{yellow}{yellow\ }\color{white}{:\ C++}$
+* $\color{orange}{orange\ }\color{white}{:\ kernel}$
+* $\color{red}{red\ }\color{white}{:\ native (user-level)}$
 * <span style="color:green">green</span> : JIT
 * <span style="color:aqua">aqua</span> : inlined
 * <span style="color:yellow">yellow</span> : C++
