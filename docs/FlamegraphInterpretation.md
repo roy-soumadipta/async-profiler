@@ -70,10 +70,10 @@ heap utilization and wall-clock profiling to view latency.
 The various colours in a FlameGraph output with their relation to 
 underlying code for a Java application:
 
-* $\color{green}{green\ }$: JIT
-* $\color{aquamarine}{aqua\ }\color{white}{:\ inlined}$
-* $\color{yellow}{yellow\ }\color{white}{:\ C++}$
-* $\color{orange}{orange\ }\color{white}{:\ kernel}$
-* $\color{red}{red\ }\color{white}{:\ native (user-level)}$
+* $\textcolor{green}{green\ }$: JIT
+* $\color{aquamarine}{aqua\ }$: inlined
+* $\color{yellow}{yellow\ }$: C++
+* $\color{orange}{orange\ }$: kernel
+* $\color{red}{red\ }$: native (user-level)
 
 Please note the colours in the example diagrams above have no relation to the official FlameGraph colour palette.
