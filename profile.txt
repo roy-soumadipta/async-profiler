@@ -1,0 +1,3159 @@
+--- Execution profile ---
+Total samples       : 733
+
+--- 8208 bytes (19.58%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.jar.Manifest$FastInputStream.<init>
+  [ 2] java.util.jar.Manifest$FastInputStream.<init>
+  [ 3] java.util.jar.Manifest.read
+  [ 4] java.util.jar.Manifest.<init>
+  [ 5] java.util.jar.Manifest.<init>
+  [ 6] java.util.jar.JarFile.getManifestFromReference
+  [ 7] java.util.jar.JarFile.getManifest
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [ 9] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [10] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [13] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [14] java.lang.ClassLoader.loadClass
+  [15] java.lang.Class.forName0
+  [16] java.lang.Class.forName
+  [17] sun.launcher.LauncherHelper.loadMainClass
+  [18] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 4872 bytes (11.62%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.ZipFile$Source.initCEN
+  [ 2] java.util.zip.ZipFile$Source.<init>
+  [ 3] java.util.zip.ZipFile$Source.get
+  [ 4] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 5] java.util.zip.ZipFile.<init>
+  [ 6] java.util.zip.ZipFile.<init>
+  [ 7] java.util.jar.JarFile.<init>
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [10] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [11] java.security.AccessController.executePrivileged
+  [12] java.security.AccessController.doPrivileged
+  [13] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [14] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [15] jdk.internal.loader.URLClassPath$3.run
+  [16] jdk.internal.loader.URLClassPath$3.run
+  [17] java.security.AccessController.executePrivileged
+  [18] java.security.AccessController.doPrivileged
+  [19] jdk.internal.loader.URLClassPath.getLoader
+  [20] jdk.internal.loader.URLClassPath.getLoader
+  [21] jdk.internal.loader.URLClassPath.getResource
+  [22] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [23] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [24] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [25] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [26] java.lang.ClassLoader.loadClass
+  [27] java.lang.Class.forName0
+  [28] java.lang.Class.forName
+  [29] sun.launcher.LauncherHelper.loadMainClass
+  [30] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 848 bytes (2.02%), 1 sample
+  [ 0] int[]
+  [ 1] java.util.zip.ZipFile$Source.initCEN
+  [ 2] java.util.zip.ZipFile$Source.<init>
+  [ 3] java.util.zip.ZipFile$Source.get
+  [ 4] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 5] java.util.zip.ZipFile.<init>
+  [ 6] java.util.zip.ZipFile.<init>
+  [ 7] java.util.jar.JarFile.<init>
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [10] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [11] java.security.AccessController.executePrivileged
+  [12] java.security.AccessController.doPrivileged
+  [13] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [14] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [15] jdk.internal.loader.URLClassPath$3.run
+  [16] jdk.internal.loader.URLClassPath$3.run
+  [17] java.security.AccessController.executePrivileged
+  [18] java.security.AccessController.doPrivileged
+  [19] jdk.internal.loader.URLClassPath.getLoader
+  [20] jdk.internal.loader.URLClassPath.getLoader
+  [21] jdk.internal.loader.URLClassPath.getResource
+  [22] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [23] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [24] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [25] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [26] java.lang.ClassLoader.loadClass
+  [27] java.lang.Class.forName0
+  [28] java.lang.Class.forName
+  [29] sun.launcher.LauncherHelper.loadMainClass
+  [30] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 528 bytes (1.26%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.InflaterInputStream.<init>
+  [ 2] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 3] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 4] java.util.zip.ZipFile.getInputStream
+  [ 5] java.util.jar.JarFile.getBytes
+  [ 6] java.util.jar.JarFile.checkForSpecialAttributes
+  [ 7] java.util.jar.JarFile.isMultiRelease
+  [ 8] java.util.jar.JarFile.getEntry
+  [ 9] java.util.jar.JarFile.getJarEntry
+  [10] jdk.internal.util.jar.JarIndex.getJarIndex
+  [11] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [12] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [13] java.security.AccessController.executePrivileged
+  [14] java.security.AccessController.doPrivileged
+  [15] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [16] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [17] jdk.internal.loader.URLClassPath$3.run
+  [18] jdk.internal.loader.URLClassPath$3.run
+  [19] java.security.AccessController.executePrivileged
+  [20] java.security.AccessController.doPrivileged
+  [21] jdk.internal.loader.URLClassPath.getLoader
+  [22] jdk.internal.loader.URLClassPath.getLoader
+  [23] jdk.internal.loader.URLClassPath.getResource
+  [24] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [25] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [27] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [28] java.lang.ClassLoader.loadClass
+  [29] java.lang.Class.forName0
+  [30] java.lang.Class.forName
+  [31] sun.launcher.LauncherHelper.loadMainClass
+  [32] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 528 bytes (1.26%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.InflaterInputStream.<init>
+  [ 2] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 3] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 4] java.util.zip.ZipFile.getInputStream
+  [ 5] java.util.jar.JarFile.getInputStream
+  [ 6] jdk.internal.loader.URLClassPath$JarLoader$2.getInputStream
+  [ 7] jdk.internal.loader.Resource.cachedInputStream
+  [ 8] jdk.internal.loader.Resource.getByteBuffer
+  [ 9] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [10] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [13] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [14] java.lang.ClassLoader.loadClass
+  [15] java.lang.Class.forName0
+  [16] java.lang.Class.forName
+  [17] sun.launcher.LauncherHelper.loadMainClass
+  [18] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 528 bytes (1.26%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.jar.Manifest.read
+  [ 2] java.util.jar.Manifest.<init>
+  [ 3] java.util.jar.Manifest.<init>
+  [ 4] java.util.jar.JarFile.getManifestFromReference
+  [ 5] java.util.jar.JarFile.getManifest
+  [ 6] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [ 7] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 8] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 9] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [11] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [12] java.lang.ClassLoader.loadClass
+  [13] java.lang.Class.forName0
+  [14] java.lang.Class.forName
+  [15] sun.launcher.LauncherHelper.loadMainClass
+  [16] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 528 bytes (1.26%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.InflaterInputStream.<init>
+  [ 2] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 3] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 4] java.util.zip.ZipFile.getInputStream
+  [ 5] java.util.jar.JarFile.getManifestFromReference
+  [ 6] java.util.jar.JarFile.getManifest
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [ 8] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 9] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [12] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [13] java.lang.ClassLoader.loadClass
+  [14] java.lang.Class.forName0
+  [15] java.lang.Class.forName
+  [16] sun.launcher.LauncherHelper.loadMainClass
+  [17] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 448 bytes (1.07%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.InflaterInputStream.<init>
+  [ 2] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 3] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 4] java.util.zip.ZipFile.getInputStream
+  [ 5] java.util.jar.JarFile.getInputStream
+  [ 6] jdk.internal.loader.URLClassPath$JarLoader$2.getInputStream
+  [ 7] jdk.internal.loader.Resource.cachedInputStream
+  [ 8] jdk.internal.loader.Resource.getByteBuffer
+  [ 9] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [10] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [13] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [14] java.lang.ClassLoader.loadClass
+  [15] java.lang.Class.forName0
+  [16] java.lang.Class.forName
+  [17] sun.launcher.LauncherHelper.loadMainClass
+  [18] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 440 bytes (1.05%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] jdk.internal.loader.Resource.getBytes
+  [ 3] jdk.internal.loader.URLClassPath$JarLoader$2.getBytes
+  [ 4] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 5] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 6] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 7] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [ 8] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [ 9] java.lang.ClassLoader.loadClass
+  [10] java.lang.Class.forName0
+  [11] java.lang.Class.forName
+  [12] sun.launcher.LauncherHelper.loadMainClass
+  [13] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 376 bytes (0.90%), 1 sample
+  [ 0] jdk.internal.misc.InnocuousThread
+  [ 1] jdk.internal.misc.InnocuousThread.createThread
+  [ 2] jdk.internal.misc.InnocuousThread.newSystemThread
+  [ 3] jdk.internal.ref.CleanerFactory$1.newThread
+  [ 4] jdk.internal.ref.CleanerImpl.start
+  [ 5] java.lang.ref.Cleaner.create
+  [ 6] jdk.internal.ref.CleanerFactory.<clinit>
+  [ 7] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 8] java.util.zip.ZipFile.<init>
+  [ 9] java.util.zip.ZipFile.<init>
+  [10] java.util.jar.JarFile.<init>
+  [11] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [12] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [13] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [14] java.security.AccessController.executePrivileged
+  [15] java.security.AccessController.doPrivileged
+  [16] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [17] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [18] jdk.internal.loader.URLClassPath$3.run
+  [19] jdk.internal.loader.URLClassPath$3.run
+  [20] java.security.AccessController.executePrivileged
+  [21] java.security.AccessController.doPrivileged
+  [22] jdk.internal.loader.URLClassPath.getLoader
+  [23] jdk.internal.loader.URLClassPath.getLoader
+  [24] jdk.internal.loader.URLClassPath.getResource
+  [25] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [27] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [28] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [29] java.lang.ClassLoader.loadClass
+  [30] java.lang.Class.forName0
+  [31] java.lang.Class.forName
+  [32] sun.launcher.LauncherHelper.loadMainClass
+  [33] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 368 bytes (0.88%), 1 sample
+  [ 0] java.lang.Thread
+  [ 1] InstanceKlass::allocate_instance_handle
+  [ 2] JavaCalls::construct_new_instance
+  [ 3] NotificationThread::initialize
+  [ 4] Management::initialize
+  [ 5] Threads::create_vm
+  [ 6] JNI_CreateJavaVM
+  [ 7] JavaMain
+  [ 8] ThreadJavaMain
+  [ 9] start_thread
+
+--- 224 bytes (0.53%), 7 samples
+  [ 0] java.util.HashMap$Node
+  [ 1] java.util.HashMap.newNode
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.HashSet.add
+  [ 5] sun.nio.fs.Util.newSet
+  [ 6] sun.nio.fs.AbstractBasicFileAttributeView.<clinit>
+  [ 7] sun.nio.fs.UnixFileAttributeViews.createBasicView
+  [ 8] sun.nio.fs.UnixFileSystemProvider.getFileAttributeView
+  [ 9] sun.nio.fs.LinuxFileSystemProvider.getFileAttributeView
+  [10] sun.nio.fs.UnixFileSystemProvider.readAttributes
+  [11] sun.nio.fs.LinuxFileSystemProvider.readAttributes
+  [12] java.nio.file.Files.readAttributes
+  [13] java.util.zip.ZipFile$Source.get
+  [14] java.util.zip.ZipFile$CleanableResource.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.zip.ZipFile.<init>
+  [17] java.util.jar.JarFile.<init>
+  [18] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [21] java.security.AccessController.executePrivileged
+  [22] java.security.AccessController.doPrivileged
+  [23] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [24] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] jdk.internal.loader.URLClassPath$3.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getLoader
+  [31] jdk.internal.loader.URLClassPath.getResource
+  [32] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [34] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [35] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [36] java.lang.ClassLoader.loadClass
+  [37] java.lang.Class.forName0
+  [38] java.lang.Class.forName
+  [39] sun.launcher.LauncherHelper.loadMainClass
+  [40] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 160 bytes (0.38%), 1 sample
+  [ 0] int[]
+  [ 1] java.util.zip.ZipFile$Source.initCEN
+  [ 2] java.util.zip.ZipFile$Source.<init>
+  [ 3] java.util.zip.ZipFile$Source.get
+  [ 4] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 5] java.util.zip.ZipFile.<init>
+  [ 6] java.util.zip.ZipFile.<init>
+  [ 7] java.util.jar.JarFile.<init>
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [10] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [11] java.security.AccessController.executePrivileged
+  [12] java.security.AccessController.doPrivileged
+  [13] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [14] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [15] jdk.internal.loader.URLClassPath$3.run
+  [16] jdk.internal.loader.URLClassPath$3.run
+  [17] java.security.AccessController.executePrivileged
+  [18] java.security.AccessController.doPrivileged
+  [19] jdk.internal.loader.URLClassPath.getLoader
+  [20] jdk.internal.loader.URLClassPath.getLoader
+  [21] jdk.internal.loader.URLClassPath.getResource
+  [22] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [23] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [24] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [25] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [26] java.lang.ClassLoader.loadClass
+  [27] java.lang.Class.forName0
+  [28] java.lang.Class.forName
+  [29] sun.launcher.LauncherHelper.loadMainClass
+  [30] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 152 bytes (0.36%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] sun.net.www.protocol.jar.Handler.parseContextSpec
+  [ 6] sun.net.www.protocol.jar.Handler.parseURL
+  [ 7] java.net.URL.<init>
+  [ 8] java.net.URL.<init>
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader.checkResource
+  [10] jdk.internal.loader.URLClassPath$JarLoader.getResource
+  [11] jdk.internal.loader.URLClassPath.getResource
+  [12] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [14] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [15] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [16] java.lang.ClassLoader.loadClass
+  [17] java.lang.Class.forName0
+  [18] java.lang.Class.forName
+  [19] sun.launcher.LauncherHelper.loadMainClass
+  [20] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 152 bytes (0.36%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [ 6] jdk.internal.loader.URLClassPath$3.run
+  [ 7] jdk.internal.loader.URLClassPath$3.run
+  [ 8] java.security.AccessController.executePrivileged
+  [ 9] java.security.AccessController.doPrivileged
+  [10] jdk.internal.loader.URLClassPath.getLoader
+  [11] jdk.internal.loader.URLClassPath.getLoader
+  [12] jdk.internal.loader.URLClassPath.getResource
+  [13] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [14] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [16] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [17] java.lang.ClassLoader.loadClass
+  [18] java.lang.Class.forName0
+  [19] java.lang.Class.forName
+  [20] sun.launcher.LauncherHelper.loadMainClass
+  [21] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 144 bytes (0.34%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.Locale.createConstant
+  [ 5] java.util.Locale.<clinit>
+  [ 6] java.lang.String.toLowerCase
+  [ 7] sun.net.util.URLUtil.urlNoFragString
+  [ 8] jdk.internal.loader.URLClassPath.getLoader
+  [ 9] jdk.internal.loader.URLClassPath.getResource
+  [10] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [13] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [14] java.lang.ClassLoader.loadClass
+  [15] java.lang.Class.forName0
+  [16] java.lang.Class.forName
+  [17] sun.launcher.LauncherHelper.loadMainClass
+  [18] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 144 bytes (0.34%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.ZipFile$Source.findEND
+  [ 2] java.util.zip.ZipFile$Source.initCEN
+  [ 3] java.util.zip.ZipFile$Source.<init>
+  [ 4] java.util.zip.ZipFile$Source.get
+  [ 5] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 6] java.util.zip.ZipFile.<init>
+  [ 7] java.util.zip.ZipFile.<init>
+  [ 8] java.util.jar.JarFile.<init>
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [10] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [11] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [12] java.security.AccessController.executePrivileged
+  [13] java.security.AccessController.doPrivileged
+  [14] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [15] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [16] jdk.internal.loader.URLClassPath$3.run
+  [17] jdk.internal.loader.URLClassPath$3.run
+  [18] java.security.AccessController.executePrivileged
+  [19] java.security.AccessController.doPrivileged
+  [20] jdk.internal.loader.URLClassPath.getLoader
+  [21] jdk.internal.loader.URLClassPath.getLoader
+  [22] jdk.internal.loader.URLClassPath.getResource
+  [23] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [24] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [25] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [26] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [27] java.lang.ClassLoader.loadClass
+  [28] java.lang.Class.forName0
+  [29] java.lang.Class.forName
+  [30] sun.launcher.LauncherHelper.loadMainClass
+  [31] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 136 bytes (0.32%), 1 sample
+  [ 0] sun.nio.fs.UnixFileAttributes
+  [ 1] sun.nio.fs.UnixFileAttributes.get
+  [ 2] sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes
+  [ 3] sun.nio.fs.UnixFileSystemProvider.readAttributes
+  [ 4] sun.nio.fs.LinuxFileSystemProvider.readAttributes
+  [ 5] java.nio.file.Files.readAttributes
+  [ 6] java.util.zip.ZipFile$Source.get
+  [ 7] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 8] java.util.zip.ZipFile.<init>
+  [ 9] java.util.zip.ZipFile.<init>
+  [10] java.util.jar.JarFile.<init>
+  [11] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [12] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [13] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [14] java.security.AccessController.executePrivileged
+  [15] java.security.AccessController.doPrivileged
+  [16] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [17] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [18] jdk.internal.loader.URLClassPath$3.run
+  [19] jdk.internal.loader.URLClassPath$3.run
+  [20] java.security.AccessController.executePrivileged
+  [21] java.security.AccessController.doPrivileged
+  [22] jdk.internal.loader.URLClassPath.getLoader
+  [23] jdk.internal.loader.URLClassPath.getLoader
+  [24] jdk.internal.loader.URLClassPath.getResource
+  [25] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [27] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [28] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [29] java.lang.ClassLoader.loadClass
+  [30] java.lang.Class.forName0
+  [31] java.lang.Class.forName
+  [32] sun.launcher.LauncherHelper.loadMainClass
+  [33] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 120 bytes (0.29%), 4 samples
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.String.substring
+  [ 4] jdk.internal.loader.ClassLoaderHelper.parsePath
+  [ 5] jdk.internal.loader.NativeLibraries$LibraryPaths.<clinit>
+  [ 6] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 7] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 8] jdk.internal.loader.BootLoader.loadLibrary
+  [ 9] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [10] sun.nio.fs.UnixFileSystem.<init>
+  [11] sun.nio.fs.LinuxFileSystem.<init>
+  [12] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [13] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [14] sun.nio.fs.UnixFileSystemProvider.<init>
+  [15] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [16] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [17] java.util.zip.ZipFile$Source.<clinit>
+  [18] java.util.zip.ZipFile$CleanableResource.<init>
+  [19] java.util.zip.ZipFile.<init>
+  [20] java.util.zip.ZipFile.<init>
+  [21] java.util.jar.JarFile.<init>
+  [22] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [23] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [24] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [25] java.security.AccessController.executePrivileged
+  [26] java.security.AccessController.doPrivileged
+  [27] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [28] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [29] jdk.internal.loader.URLClassPath$3.run
+  [30] jdk.internal.loader.URLClassPath$3.run
+  [31] java.security.AccessController.executePrivileged
+  [32] java.security.AccessController.doPrivileged
+  [33] jdk.internal.loader.URLClassPath.getLoader
+  [34] jdk.internal.loader.URLClassPath.getLoader
+  [35] jdk.internal.loader.URLClassPath.getResource
+  [36] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [37] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [38] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [39] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [40] java.lang.ClassLoader.loadClass
+  [41] java.lang.Class.forName0
+  [42] java.lang.Class.forName
+  [43] sun.launcher.LauncherHelper.loadMainClass
+  [44] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 112 bytes (0.27%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.io.UnixFileSystem.resolve
+  [ 6] java.io.File.<init>
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] java.util.zip.ZipUtils.loadLibrary
+  [12] java.util.zip.CRC32.<clinit>
+  [13] jdk.internal.loader.URLClassPath$JarLoader$2.getBytes
+  [14] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [15] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [17] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [18] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [19] java.lang.ClassLoader.loadClass
+  [20] java.lang.Class.forName0
+  [21] java.lang.Class.forName
+  [22] sun.launcher.LauncherHelper.loadMainClass
+  [23] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 112 bytes (0.27%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] sun.net.www.protocol.jar.Handler.parseContextSpec
+  [ 5] sun.net.www.protocol.jar.Handler.parseURL
+  [ 6] java.net.URL.<init>
+  [ 7] java.net.URL.<init>
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.checkResource
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader.getResource
+  [10] jdk.internal.loader.URLClassPath.getResource
+  [11] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [14] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [15] java.lang.ClassLoader.loadClass
+  [16] java.lang.Class.forName0
+  [17] java.lang.Class.forName
+  [18] sun.launcher.LauncherHelper.loadMainClass
+  [19] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 112 bytes (0.27%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.io.UnixFileSystem.resolve
+  [ 6] java.io.File.<init>
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] java.util.zip.ZipUtils.loadLibrary
+  [12] java.util.zip.Inflater.<clinit>
+  [13] java.util.zip.ZipFile$CleanableResource.getInflater
+  [14] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [15] java.util.zip.ZipFile.getInputStream
+  [16] java.util.jar.JarFile.getBytes
+  [17] java.util.jar.JarFile.checkForSpecialAttributes
+  [18] java.util.jar.JarFile.isMultiRelease
+  [19] java.util.jar.JarFile.getEntry
+  [20] java.util.jar.JarFile.getJarEntry
+  [21] jdk.internal.util.jar.JarIndex.getJarIndex
+  [22] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [23] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [24] java.security.AccessController.executePrivileged
+  [25] java.security.AccessController.doPrivileged
+  [26] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [27] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [28] jdk.internal.loader.URLClassPath$3.run
+  [29] jdk.internal.loader.URLClassPath$3.run
+  [30] java.security.AccessController.executePrivileged
+  [31] java.security.AccessController.doPrivileged
+  [32] jdk.internal.loader.URLClassPath.getLoader
+  [33] jdk.internal.loader.URLClassPath.getLoader
+  [34] jdk.internal.loader.URLClassPath.getResource
+  [35] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [36] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [37] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [38] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [39] java.lang.ClassLoader.loadClass
+  [40] java.lang.Class.forName0
+  [41] java.lang.Class.forName
+  [42] sun.launcher.LauncherHelper.loadMainClass
+  [43] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 112 bytes (0.27%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.io.UnixFileSystem.resolve
+  [ 6] java.io.File.<init>
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [12] sun.nio.fs.UnixFileSystem.<init>
+  [13] sun.nio.fs.LinuxFileSystem.<init>
+  [14] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [15] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [16] sun.nio.fs.UnixFileSystemProvider.<init>
+  [17] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [18] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [19] java.util.zip.ZipFile$Source.<clinit>
+  [20] java.util.zip.ZipFile$CleanableResource.<init>
+  [21] java.util.zip.ZipFile.<init>
+  [22] java.util.zip.ZipFile.<init>
+  [23] java.util.jar.JarFile.<init>
+  [24] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [25] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [26] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [30] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [31] jdk.internal.loader.URLClassPath$3.run
+  [32] jdk.internal.loader.URLClassPath$3.run
+  [33] java.security.AccessController.executePrivileged
+  [34] java.security.AccessController.doPrivileged
+  [35] jdk.internal.loader.URLClassPath.getLoader
+  [36] jdk.internal.loader.URLClassPath.getLoader
+  [37] jdk.internal.loader.URLClassPath.getResource
+  [38] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [39] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [40] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [41] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [42] java.lang.ClassLoader.loadClass
+  [43] java.lang.Class.forName0
+  [44] java.lang.Class.forName
+  [45] sun.launcher.LauncherHelper.loadMainClass
+  [46] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 112 bytes (0.27%), 1 sample
+  [ 0] java.lang.Class
+  [ 1] InstanceMirrorKlass::allocate_instance
+  [ 2] java_lang_Class::create_mirror
+  [ 3] ClassFileParser::fill_instance_klass
+  [ 4] ClassFileParser::create_instance_klass
+  [ 5] KlassFactory::create_from_stream
+  [ 6] SystemDictionary::resolve_class_from_stream
+  [ 7] jvm_define_class_common
+  [ 8] JVM_DefineClassWithSource
+  [ 9] Java_java_lang_ClassLoader_defineClass1
+  [10] java.lang.ClassLoader.defineClass1
+  [11] java.lang.ClassLoader.defineClass
+  [12] java.security.SecureClassLoader.defineClass
+  [13] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 104 bytes (0.25%), 1 sample
+  [ 0] java.util.jar.JarFile$JarFileEntry
+  [ 1] java.util.jar.JarFile.entryFor
+  [ 2] java.util.jar.JavaUtilJarAccessImpl.entryFor
+  [ 3] java.util.zip.ZipFile.getZipEntry
+  [ 4] java.util.zip.ZipFile.getEntry
+  [ 5] java.util.jar.JarFile.getManEntry
+  [ 6] java.util.jar.JarFile.checkForSpecialAttributes
+  [ 7] java.util.jar.JarFile.isMultiRelease
+  [ 8] java.util.jar.JarFile.getEntry
+  [ 9] java.util.jar.JarFile.getJarEntry
+  [10] jdk.internal.util.jar.JarIndex.getJarIndex
+  [11] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [12] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [13] java.security.AccessController.executePrivileged
+  [14] java.security.AccessController.doPrivileged
+  [15] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [16] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [17] jdk.internal.loader.URLClassPath$3.run
+  [18] jdk.internal.loader.URLClassPath$3.run
+  [19] java.security.AccessController.executePrivileged
+  [20] java.security.AccessController.doPrivileged
+  [21] jdk.internal.loader.URLClassPath.getLoader
+  [22] jdk.internal.loader.URLClassPath.getLoader
+  [23] jdk.internal.loader.URLClassPath.getResource
+  [24] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [25] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [27] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [28] java.lang.ClassLoader.loadClass
+  [29] java.lang.Class.forName0
+  [30] java.lang.Class.forName
+  [31] sun.launcher.LauncherHelper.loadMainClass
+  [32] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 104 bytes (0.25%), 1 sample
+  [ 0] java.util.jar.JarFile$JarFileEntry
+  [ 1] java.util.jar.JarFile.entryFor
+  [ 2] java.util.jar.JavaUtilJarAccessImpl.entryFor
+  [ 3] java.util.zip.ZipFile.getZipEntry
+  [ 4] java.util.zip.ZipFile.getEntry
+  [ 5] java.util.jar.JarFile.getEntry
+  [ 6] java.util.jar.JarFile.getJarEntry
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader.getResource
+  [ 8] jdk.internal.loader.URLClassPath.getResource
+  [ 9] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [12] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [13] java.lang.ClassLoader.loadClass
+  [14] java.lang.Class.forName0
+  [15] java.lang.Class.forName
+  [16] sun.launcher.LauncherHelper.loadMainClass
+  [17] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 96 bytes (0.23%), 4 samples
+  [ 0] java.lang.String
+  [ 1] java.lang.StringLatin1.newString
+  [ 2] java.lang.String.substring
+  [ 3] jdk.internal.loader.ClassLoaderHelper.parsePath
+  [ 4] jdk.internal.loader.NativeLibraries$LibraryPaths.<clinit>
+  [ 5] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 6] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 7] jdk.internal.loader.BootLoader.loadLibrary
+  [ 8] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [ 9] sun.nio.fs.UnixFileSystem.<init>
+  [10] sun.nio.fs.LinuxFileSystem.<init>
+  [11] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [12] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [13] sun.nio.fs.UnixFileSystemProvider.<init>
+  [14] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [15] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [16] java.util.zip.ZipFile$Source.<clinit>
+  [17] java.util.zip.ZipFile$CleanableResource.<init>
+  [18] java.util.zip.ZipFile.<init>
+  [19] java.util.zip.ZipFile.<init>
+  [20] java.util.jar.JarFile.<init>
+  [21] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [22] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [23] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [24] java.security.AccessController.executePrivileged
+  [25] java.security.AccessController.doPrivileged
+  [26] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [27] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [28] jdk.internal.loader.URLClassPath$3.run
+  [29] jdk.internal.loader.URLClassPath$3.run
+  [30] java.security.AccessController.executePrivileged
+  [31] java.security.AccessController.doPrivileged
+  [32] jdk.internal.loader.URLClassPath.getLoader
+  [33] jdk.internal.loader.URLClassPath.getLoader
+  [34] jdk.internal.loader.URLClassPath.getResource
+  [35] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [36] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [37] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [38] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [39] java.lang.ClassLoader.loadClass
+  [40] java.lang.Class.forName0
+  [41] java.lang.Class.forName
+  [42] sun.launcher.LauncherHelper.loadMainClass
+  [43] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.jar.JarFile.<clinit>
+  [ 2] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 3] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 4] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 5] java.security.AccessController.executePrivileged
+  [ 6] java.security.AccessController.doPrivileged
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [ 9] jdk.internal.loader.URLClassPath$3.run
+  [10] jdk.internal.loader.URLClassPath$3.run
+  [11] java.security.AccessController.executePrivileged
+  [12] java.security.AccessController.doPrivileged
+  [13] jdk.internal.loader.URLClassPath.getLoader
+  [14] jdk.internal.loader.URLClassPath.getLoader
+  [15] jdk.internal.loader.URLClassPath.getResource
+  [16] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [17] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [18] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [19] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [20] java.lang.ClassLoader.loadClass
+  [21] java.lang.Class.forName0
+  [22] java.lang.Class.forName
+  [23] sun.launcher.LauncherHelper.loadMainClass
+  [24] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.InflaterInputStream.<init>
+  [ 2] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 3] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 4] java.util.zip.ZipFile.getInputStream
+  [ 5] java.util.jar.JarFile.getBytes
+  [ 6] java.util.jar.JarFile.checkForSpecialAttributes
+  [ 7] java.util.jar.JarFile.isMultiRelease
+  [ 8] java.util.jar.JarFile.getEntry
+  [ 9] java.util.jar.JarFile.getJarEntry
+  [10] jdk.internal.util.jar.JarIndex.getJarIndex
+  [11] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [12] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [13] java.security.AccessController.executePrivileged
+  [14] java.security.AccessController.doPrivileged
+  [15] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [16] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [17] jdk.internal.loader.URLClassPath$3.run
+  [18] jdk.internal.loader.URLClassPath$3.run
+  [19] java.security.AccessController.executePrivileged
+  [20] java.security.AccessController.doPrivileged
+  [21] jdk.internal.loader.URLClassPath.getLoader
+  [22] jdk.internal.loader.URLClassPath.getLoader
+  [23] jdk.internal.loader.URLClassPath.getResource
+  [24] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [25] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [27] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [28] java.lang.ClassLoader.loadClass
+  [29] java.lang.Class.forName0
+  [30] java.lang.Class.forName
+  [31] sun.launcher.LauncherHelper.loadMainClass
+  [32] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] sun.net.util.URLUtil.urlNoFragString
+  [ 5] jdk.internal.loader.URLClassPath.getLoader
+  [ 6] jdk.internal.loader.URLClassPath.getResource
+  [ 7] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 8] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 9] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [10] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [11] java.lang.ClassLoader.loadClass
+  [12] java.lang.Class.forName0
+  [13] java.lang.Class.forName
+  [14] sun.launcher.LauncherHelper.loadMainClass
+  [15] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] sun.net.www.protocol.jar.Handler.parseContextSpec
+  [ 6] sun.net.www.protocol.jar.Handler.parseURL
+  [ 7] java.net.URL.<init>
+  [ 8] java.net.URL.<init>
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader.checkResource
+  [10] jdk.internal.loader.URLClassPath$JarLoader.getResource
+  [11] jdk.internal.loader.URLClassPath.getResource
+  [12] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [14] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [15] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [16] java.lang.ClassLoader.loadClass
+  [17] java.lang.Class.forName0
+  [18] java.lang.Class.forName
+  [19] sun.launcher.LauncherHelper.loadMainClass
+  [20] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [ 5] jdk.internal.loader.URLClassPath$3.run
+  [ 6] jdk.internal.loader.URLClassPath$3.run
+  [ 7] java.security.AccessController.executePrivileged
+  [ 8] java.security.AccessController.doPrivileged
+  [ 9] jdk.internal.loader.URLClassPath.getLoader
+  [10] jdk.internal.loader.URLClassPath.getLoader
+  [11] jdk.internal.loader.URLClassPath.getResource
+  [12] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [14] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [15] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [16] java.lang.ClassLoader.loadClass
+  [17] java.lang.Class.forName0
+  [18] java.lang.Class.forName
+  [19] sun.launcher.LauncherHelper.loadMainClass
+  [20] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.InflaterInputStream.<init>
+  [ 2] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 3] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [ 4] java.util.zip.ZipFile.getInputStream
+  [ 5] java.util.jar.JarFile.getManifestFromReference
+  [ 6] java.util.jar.JarFile.getManifest
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [ 8] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 9] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [12] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [13] java.lang.ClassLoader.loadClass
+  [14] java.lang.Class.forName0
+  [15] java.lang.Class.forName
+  [16] sun.launcher.LauncherHelper.loadMainClass
+  [17] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] java.lang.Object[]
+  [ 1] java.util.ArrayDeque.<init>
+  [ 2] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 3] java.util.zip.ZipFile.<init>
+  [ 4] java.util.zip.ZipFile.<init>
+  [ 5] java.util.jar.JarFile.<init>
+  [ 6] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 9] java.security.AccessController.executePrivileged
+  [10] java.security.AccessController.doPrivileged
+  [11] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [12] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [13] jdk.internal.loader.URLClassPath$3.run
+  [14] jdk.internal.loader.URLClassPath$3.run
+  [15] java.security.AccessController.executePrivileged
+  [16] java.security.AccessController.doPrivileged
+  [17] jdk.internal.loader.URLClassPath.getLoader
+  [18] jdk.internal.loader.URLClassPath.getLoader
+  [19] jdk.internal.loader.URLClassPath.getResource
+  [20] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [21] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [22] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [23] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [24] java.lang.ClassLoader.loadClass
+  [25] java.lang.Class.forName0
+  [26] java.lang.Class.forName
+  [27] sun.launcher.LauncherHelper.loadMainClass
+  [28] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] java.net.URLStreamHandler.toExternalForm
+  [ 5] java.net.URL.toExternalForm
+  [ 6] java.net.URL.toString
+  [ 7] java.lang.ClassLoader.defineClassSourceLocation
+  [ 8] java.lang.ClassLoader.defineClass
+  [ 9] java.security.SecureClassLoader.defineClass
+  [10] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [11] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [14] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [15] java.lang.ClassLoader.loadClass
+  [16] java.lang.Class.forName0
+  [17] java.lang.Class.forName
+  [18] sun.launcher.LauncherHelper.loadMainClass
+  [19] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.net.URLStreamHandler.toExternalForm
+  [ 6] java.net.URL.toExternalForm
+  [ 7] java.net.URL.toString
+  [ 8] java.lang.String.valueOf
+  [ 9] java.lang.StringBuilder.append
+  [10] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [11] jdk.internal.loader.URLClassPath$3.run
+  [12] jdk.internal.loader.URLClassPath$3.run
+  [13] java.security.AccessController.executePrivileged
+  [14] java.security.AccessController.doPrivileged
+  [15] jdk.internal.loader.URLClassPath.getLoader
+  [16] jdk.internal.loader.URLClassPath.getLoader
+  [17] jdk.internal.loader.URLClassPath.getResource
+  [18] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [19] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [20] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [21] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [22] java.lang.ClassLoader.loadClass
+  [23] java.lang.Class.forName0
+  [24] java.lang.Class.forName
+  [25] sun.launcher.LauncherHelper.loadMainClass
+  [26] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.lang.StringBuilder.append
+  [ 6] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [ 7] jdk.internal.loader.URLClassPath$3.run
+  [ 8] jdk.internal.loader.URLClassPath$3.run
+  [ 9] java.security.AccessController.executePrivileged
+  [10] java.security.AccessController.doPrivileged
+  [11] jdk.internal.loader.URLClassPath.getLoader
+  [12] jdk.internal.loader.URLClassPath.getLoader
+  [13] jdk.internal.loader.URLClassPath.getResource
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] sun.net.util.URLUtil.urlNoFragString
+  [ 6] jdk.internal.loader.URLClassPath.getLoader
+  [ 7] jdk.internal.loader.URLClassPath.getResource
+  [ 8] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 9] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [11] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [12] java.lang.ClassLoader.loadClass
+  [13] java.lang.Class.forName0
+  [14] java.lang.Class.forName
+  [15] sun.launcher.LauncherHelper.loadMainClass
+  [16] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] java.net.URLStreamHandler.toExternalForm
+  [ 5] java.net.URL.toExternalForm
+  [ 6] java.net.URL.toString
+  [ 7] java.lang.String.valueOf
+  [ 8] java.lang.StringBuilder.append
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [10] jdk.internal.loader.URLClassPath$3.run
+  [11] jdk.internal.loader.URLClassPath$3.run
+  [12] java.security.AccessController.executePrivileged
+  [13] java.security.AccessController.doPrivileged
+  [14] jdk.internal.loader.URLClassPath.getLoader
+  [15] jdk.internal.loader.URLClassPath.getLoader
+  [16] jdk.internal.loader.URLClassPath.getResource
+  [17] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [18] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [19] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [20] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [21] java.lang.ClassLoader.loadClass
+  [22] java.lang.Class.forName0
+  [23] java.lang.Class.forName
+  [24] sun.launcher.LauncherHelper.loadMainClass
+  [25] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.net.URLStreamHandler.toExternalForm
+  [ 6] java.net.URL.toExternalForm
+  [ 7] java.net.URL.toString
+  [ 8] java.lang.ClassLoader.defineClassSourceLocation
+  [ 9] java.lang.ClassLoader.defineClass
+  [10] java.security.SecureClassLoader.defineClass
+  [11] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [12] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [14] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [15] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [16] java.lang.ClassLoader.loadClass
+  [17] java.lang.Class.forName0
+  [18] java.lang.Class.forName
+  [19] sun.launcher.LauncherHelper.loadMainClass
+  [20] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] java.lang.reflect.Method
+  [ 1] java.lang.reflect.Method.copy
+  [ 2] java.lang.reflect.ReflectAccess.copyMethod
+  [ 3] jdk.internal.reflect.ReflectionFactory.copyMethod
+  [ 4] java.lang.Class.getMethod
+  [ 5] sun.launcher.LauncherHelper.validateMainClass
+  [ 6] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] sun.net.util.URLUtil.urlNoFragString
+  [ 6] java.security.CodeSource.<init>
+  [ 7] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 8] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 9] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [11] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [12] java.lang.ClassLoader.loadClass
+  [13] java.lang.Class.forName0
+  [14] java.lang.Class.forName
+  [15] sun.launcher.LauncherHelper.loadMainClass
+  [16] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] java.lang.reflect.Method
+  [ 1] InstanceKlass::allocate_instance_handle
+  [ 2] java_lang_reflect_Method::create
+  [ 3] Reflection::new_method
+  [ 4] get_class_declared_methods_helper
+  [ 5] JVM_GetClassDeclaredMethods
+  [ 6] java.lang.Class.getDeclaredMethods0
+  [ 7] java.lang.Class.privateGetDeclaredMethods
+  [ 8] java.lang.Class.getMethodsRecursive
+  [ 9] java.lang.Class.getMethod0
+  [10] java.lang.Class.getMethod
+  [11] sun.launcher.LauncherHelper.validateMainClass
+  [12] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] sun.net.util.URLUtil.urlNoFragString
+  [ 5] java.security.CodeSource.<init>
+  [ 6] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 7] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 8] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 9] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [10] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [11] java.lang.ClassLoader.loadClass
+  [12] java.lang.Class.forName0
+  [13] java.lang.Class.forName
+  [14] sun.launcher.LauncherHelper.loadMainClass
+  [15] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 88 bytes (0.21%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.jar.JarFile.<clinit>
+  [ 2] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 3] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 4] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 5] java.security.AccessController.executePrivileged
+  [ 6] java.security.AccessController.doPrivileged
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [ 9] jdk.internal.loader.URLClassPath$3.run
+  [10] jdk.internal.loader.URLClassPath$3.run
+  [11] java.security.AccessController.executePrivileged
+  [12] java.security.AccessController.doPrivileged
+  [13] jdk.internal.loader.URLClassPath.getLoader
+  [14] jdk.internal.loader.URLClassPath.getLoader
+  [15] jdk.internal.loader.URLClassPath.getResource
+  [16] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [17] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [18] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [19] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [20] java.lang.ClassLoader.loadClass
+  [21] java.lang.Class.forName0
+  [22] java.lang.Class.forName
+  [23] sun.launcher.LauncherHelper.loadMainClass
+  [24] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.WeakHashMap$Entry[]
+  [ 1] java.util.WeakHashMap.newTable
+  [ 2] java.util.WeakHashMap.<init>
+  [ 3] java.util.WeakHashMap.<init>
+  [ 4] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 5] java.util.zip.ZipFile.<init>
+  [ 6] java.util.zip.ZipFile.<init>
+  [ 7] java.util.jar.JarFile.<init>
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [10] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [11] java.security.AccessController.executePrivileged
+  [12] java.security.AccessController.doPrivileged
+  [13] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [14] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [15] jdk.internal.loader.URLClassPath$3.run
+  [16] jdk.internal.loader.URLClassPath$3.run
+  [17] java.security.AccessController.executePrivileged
+  [18] java.security.AccessController.doPrivileged
+  [19] jdk.internal.loader.URLClassPath.getLoader
+  [20] jdk.internal.loader.URLClassPath.getLoader
+  [21] jdk.internal.loader.URLClassPath.getResource
+  [22] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [23] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [24] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [25] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [26] java.lang.ClassLoader.loadClass
+  [27] java.lang.Class.forName0
+  [28] java.lang.Class.forName
+  [29] sun.launcher.LauncherHelper.loadMainClass
+  [30] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 2 samples
+  [ 0] byte[]
+  [ 1] test.alloc.Hello.main
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.putVal
+  [ 3] java.util.concurrent.ConcurrentHashMap.put
+  [ 4] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 5] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 6] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 7] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.BootLoader.loadLibrary
+  [10] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [11] sun.nio.fs.UnixFileSystem.<init>
+  [12] sun.nio.fs.LinuxFileSystem.<init>
+  [13] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [14] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [15] sun.nio.fs.UnixFileSystemProvider.<init>
+  [16] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [17] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [18] java.util.zip.ZipFile$Source.<clinit>
+  [19] java.util.zip.ZipFile$CleanableResource.<init>
+  [20] java.util.zip.ZipFile.<init>
+  [21] java.util.zip.ZipFile.<init>
+  [22] java.util.jar.JarFile.<init>
+  [23] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [24] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [25] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [26] java.security.AccessController.executePrivileged
+  [27] java.security.AccessController.doPrivileged
+  [28] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [29] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [30] jdk.internal.loader.URLClassPath$3.run
+  [31] jdk.internal.loader.URLClassPath$3.run
+  [32] java.security.AccessController.executePrivileged
+  [33] java.security.AccessController.doPrivileged
+  [34] jdk.internal.loader.URLClassPath.getLoader
+  [35] jdk.internal.loader.URLClassPath.getLoader
+  [36] jdk.internal.loader.URLClassPath.getResource
+  [37] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [38] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [39] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [40] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [41] java.lang.ClassLoader.loadClass
+  [42] java.lang.Class.forName0
+  [43] java.lang.Class.forName
+  [44] sun.launcher.LauncherHelper.loadMainClass
+  [45] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.HashSet.add
+  [ 5] sun.nio.fs.Util.newSet
+  [ 6] sun.nio.fs.AbstractBasicFileAttributeView.<clinit>
+  [ 7] sun.nio.fs.UnixFileAttributeViews.createBasicView
+  [ 8] sun.nio.fs.UnixFileSystemProvider.getFileAttributeView
+  [ 9] sun.nio.fs.LinuxFileSystemProvider.getFileAttributeView
+  [10] sun.nio.fs.UnixFileSystemProvider.readAttributes
+  [11] sun.nio.fs.LinuxFileSystemProvider.readAttributes
+  [12] java.nio.file.Files.readAttributes
+  [13] java.util.zip.ZipFile$Source.get
+  [14] java.util.zip.ZipFile$CleanableResource.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.zip.ZipFile.<init>
+  [17] java.util.jar.JarFile.<init>
+  [18] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [21] java.security.AccessController.executePrivileged
+  [22] java.security.AccessController.doPrivileged
+  [23] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [24] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] jdk.internal.loader.URLClassPath$3.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getLoader
+  [31] jdk.internal.loader.URLClassPath.getResource
+  [32] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [34] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [35] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [36] java.lang.ClassLoader.loadClass
+  [37] java.lang.Class.forName0
+  [38] java.lang.Class.forName
+  [39] sun.launcher.LauncherHelper.loadMainClass
+  [40] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.putVal
+  [ 3] java.util.concurrent.ConcurrentHashMap.put
+  [ 4] java.security.BasicPermissionCollection.add
+  [ 5] java.security.Permissions.add
+  [ 6] sun.security.util.LazyCodeSourcePermissionCollection.add
+  [ 7] jdk.internal.loader.ClassLoaders$AppClassLoader.getPermissions
+  [ 8] java.security.SecureClassLoader$1.apply
+  [ 9] java.security.SecureClassLoader$1.apply
+  [10] java.util.concurrent.ConcurrentHashMap.computeIfAbsent
+  [11] java.security.SecureClassLoader.getProtectionDomain
+  [12] java.security.SecureClassLoader.defineClass
+  [13] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.putVal
+  [ 3] java.util.concurrent.ConcurrentHashMap.putIfAbsent
+  [ 4] java.security.Permissions.createPermissionCollection
+  [ 5] java.security.Permissions.getPermissionCollection
+  [ 6] java.security.Permissions.add
+  [ 7] sun.security.util.LazyCodeSourcePermissionCollection.add
+  [ 8] jdk.internal.loader.ClassLoaders$AppClassLoader.getPermissions
+  [ 9] java.security.SecureClassLoader$1.apply
+  [10] java.security.SecureClassLoader$1.apply
+  [11] java.util.concurrent.ConcurrentHashMap.computeIfAbsent
+  [12] java.security.SecureClassLoader.getProtectionDomain
+  [13] java.security.SecureClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [15] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [17] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [18] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [19] java.lang.ClassLoader.loadClass
+  [20] java.lang.Class.forName0
+  [21] java.lang.Class.forName
+  [22] sun.launcher.LauncherHelper.loadMainClass
+  [23] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] TypeArrayKlass::allocate_common
+  [ 2] java_lang_String::basic_create
+  [ 3] java_lang_String::create_from_unicode
+  [ 4] java_lang_String::create_oop_from_unicode
+  [ 5] jni_NewString
+  [ 6] newSizedString8859_1
+  [ 7] JNU_NewStringPlatform
+  [ 8] Java_java_io_UnixFileSystem_canonicalize0
+  [ 9] java.io.UnixFileSystem.canonicalize0
+  [10] java.io.UnixFileSystem.canonicalize
+  [11] java.io.File.getCanonicalPath
+  [12] jdk.internal.loader.NativeLibraries$1.run
+  [13] jdk.internal.loader.NativeLibraries$1.run
+  [14] java.security.AccessController.executePrivileged
+  [15] java.security.AccessController.doPrivileged
+  [16] jdk.internal.loader.NativeLibraries.loadLibrary
+  [17] jdk.internal.loader.NativeLibraries.findFromPaths
+  [18] jdk.internal.loader.NativeLibraries.loadLibrary
+  [19] jdk.internal.loader.NativeLibraries.loadLibrary
+  [20] jdk.internal.loader.BootLoader.loadLibrary
+  [21] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [22] sun.nio.fs.UnixFileSystem.<init>
+  [23] sun.nio.fs.LinuxFileSystem.<init>
+  [24] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [25] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [26] sun.nio.fs.UnixFileSystemProvider.<init>
+  [27] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [28] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [29] java.util.zip.ZipFile$Source.<clinit>
+  [30] java.util.zip.ZipFile$CleanableResource.<init>
+  [31] java.util.zip.ZipFile.<init>
+  [32] java.util.zip.ZipFile.<init>
+  [33] java.util.jar.JarFile.<init>
+  [34] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [35] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [36] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [37] java.security.AccessController.executePrivileged
+  [38] java.security.AccessController.doPrivileged
+  [39] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [40] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [41] jdk.internal.loader.URLClassPath$3.run
+  [42] jdk.internal.loader.URLClassPath$3.run
+  [43] java.security.AccessController.executePrivileged
+  [44] java.security.AccessController.doPrivileged
+  [45] jdk.internal.loader.URLClassPath.getLoader
+  [46] jdk.internal.loader.URLClassPath.getLoader
+  [47] jdk.internal.loader.URLClassPath.getResource
+  [48] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [49] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [50] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [51] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [52] java.lang.ClassLoader.loadClass
+  [53] java.lang.Class.forName0
+  [54] java.lang.Class.forName
+  [55] sun.launcher.LauncherHelper.loadMainClass
+  [56] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.zip.ZipFile$Source.get
+  [ 5] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 6] java.util.zip.ZipFile.<init>
+  [ 7] java.util.zip.ZipFile.<init>
+  [ 8] java.util.jar.JarFile.<init>
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [10] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [11] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [12] java.security.AccessController.executePrivileged
+  [13] java.security.AccessController.doPrivileged
+  [14] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [15] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [16] jdk.internal.loader.URLClassPath$3.run
+  [17] jdk.internal.loader.URLClassPath$3.run
+  [18] java.security.AccessController.executePrivileged
+  [19] java.security.AccessController.doPrivileged
+  [20] jdk.internal.loader.URLClassPath.getLoader
+  [21] jdk.internal.loader.URLClassPath.getLoader
+  [22] jdk.internal.loader.URLClassPath.getResource
+  [23] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [24] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [25] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [26] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [27] java.lang.ClassLoader.loadClass
+  [28] java.lang.Class.forName0
+  [29] java.lang.Class.forName
+  [30] sun.launcher.LauncherHelper.loadMainClass
+  [31] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.lang.ThreadLocal$ThreadLocalMap$Entry[]
+  [ 1] java.lang.ThreadLocal$ThreadLocalMap.<init>
+  [ 2] java.lang.ThreadLocal.createMap
+  [ 3] java.lang.ThreadLocal.setInitialValue
+  [ 4] java.lang.ThreadLocal.get
+  [ 5] sun.nio.fs.NativeBuffers.getNativeBufferFromCache
+  [ 6] sun.nio.fs.UnixNativeDispatcher.copyToNativeBuffer
+  [ 7] sun.nio.fs.UnixNativeDispatcher.stat
+  [ 8] sun.nio.fs.UnixFileAttributes.get
+  [ 9] sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes
+  [10] sun.nio.fs.UnixFileSystemProvider.readAttributes
+  [11] sun.nio.fs.LinuxFileSystemProvider.readAttributes
+  [12] java.nio.file.Files.readAttributes
+  [13] java.util.zip.ZipFile$Source.get
+  [14] java.util.zip.ZipFile$CleanableResource.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.zip.ZipFile.<init>
+  [17] java.util.jar.JarFile.<init>
+  [18] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [21] java.security.AccessController.executePrivileged
+  [22] java.security.AccessController.doPrivileged
+  [23] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [24] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] jdk.internal.loader.URLClassPath$3.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getLoader
+  [31] jdk.internal.loader.URLClassPath.getResource
+  [32] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [34] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [35] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [36] java.lang.ClassLoader.loadClass
+  [37] java.lang.Class.forName0
+  [38] java.lang.Class.forName
+  [39] sun.launcher.LauncherHelper.loadMainClass
+  [40] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.putVal
+  [ 3] java.util.concurrent.ConcurrentHashMap.putIfAbsent
+  [ 4] java.lang.ClassLoader.definePackage
+  [ 5] jdk.internal.loader.BuiltinClassLoader.definePackage
+  [ 6] jdk.internal.loader.BuiltinClassLoader.defineOrCheckPackage
+  [ 7] jdk.internal.loader.ClassLoaders$AppClassLoader.defineOrCheckPackage
+  [ 8] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 9] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [12] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [13] java.lang.ClassLoader.loadClass
+  [14] java.lang.Class.forName0
+  [15] java.lang.Class.forName
+  [16] sun.launcher.LauncherHelper.loadMainClass
+  [17] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.putVal
+  [ 3] java.util.concurrent.ConcurrentHashMap.putIfAbsent
+  [ 4] java.lang.ClassLoader.checkCerts
+  [ 5] java.lang.ClassLoader.preDefineClass
+  [ 6] java.lang.ClassLoader.defineClass
+  [ 7] java.security.SecureClassLoader.defineClass
+  [ 8] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 9] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [12] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [13] java.lang.ClassLoader.loadClass
+  [14] java.lang.Class.forName0
+  [15] java.lang.Class.forName
+  [16] sun.launcher.LauncherHelper.loadMainClass
+  [17] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.zip.ZipFile$Source
+  [ 1] java.util.zip.ZipFile$Source.get
+  [ 2] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 3] java.util.zip.ZipFile.<init>
+  [ 4] java.util.zip.ZipFile.<init>
+  [ 5] java.util.jar.JarFile.<init>
+  [ 6] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 9] java.security.AccessController.executePrivileged
+  [10] java.security.AccessController.doPrivileged
+  [11] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [12] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [13] jdk.internal.loader.URLClassPath$3.run
+  [14] jdk.internal.loader.URLClassPath$3.run
+  [15] java.security.AccessController.executePrivileged
+  [16] java.security.AccessController.doPrivileged
+  [17] jdk.internal.loader.URLClassPath.getLoader
+  [18] jdk.internal.loader.URLClassPath.getLoader
+  [19] jdk.internal.loader.URLClassPath.getResource
+  [20] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [21] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [22] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [23] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [24] java.lang.ClassLoader.loadClass
+  [25] java.lang.Class.forName0
+  [26] java.lang.Class.forName
+  [27] sun.launcher.LauncherHelper.loadMainClass
+  [28] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 2 samples
+  [ 0] java.util.LinkedHashMap$Entry
+  [ 1] java.util.LinkedHashMap.newNode
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.jar.Attributes.put
+  [ 5] java.util.jar.Attributes.putValue
+  [ 6] java.util.jar.Attributes.read
+  [ 7] java.util.jar.Manifest.read
+  [ 8] java.util.jar.Manifest.<init>
+  [ 9] java.util.jar.Manifest.<init>
+  [10] java.util.jar.JarFile.getManifestFromReference
+  [11] java.util.jar.JarFile.getManifest
+  [12] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [13] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.TimeUnit
+  [ 1] java.util.concurrent.TimeUnit.<clinit>
+  [ 2] sun.nio.fs.UnixFileAttributes.toFileTime
+  [ 3] sun.nio.fs.UnixFileAttributes.lastModifiedTime
+  [ 4] sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime
+  [ 5] java.util.zip.ZipFile$Source$Key.hashCode
+  [ 6] java.util.HashMap.hash
+  [ 7] java.util.HashMap.put
+  [ 8] java.util.zip.ZipFile$Source.get
+  [ 9] java.util.zip.ZipFile$CleanableResource.<init>
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.HashSet.add
+  [ 5] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 6] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [12] sun.nio.fs.UnixFileSystem.<init>
+  [13] sun.nio.fs.LinuxFileSystem.<init>
+  [14] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [15] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [16] sun.nio.fs.UnixFileSystemProvider.<init>
+  [17] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [18] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [19] java.util.zip.ZipFile$Source.<clinit>
+  [20] java.util.zip.ZipFile$CleanableResource.<init>
+  [21] java.util.zip.ZipFile.<init>
+  [22] java.util.zip.ZipFile.<init>
+  [23] java.util.jar.JarFile.<init>
+  [24] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [25] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [26] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [30] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [31] jdk.internal.loader.URLClassPath$3.run
+  [32] jdk.internal.loader.URLClassPath$3.run
+  [33] java.security.AccessController.executePrivileged
+  [34] java.security.AccessController.doPrivileged
+  [35] jdk.internal.loader.URLClassPath.getLoader
+  [36] jdk.internal.loader.URLClassPath.getLoader
+  [37] jdk.internal.loader.URLClassPath.getResource
+  [38] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [39] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [40] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [41] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [42] java.lang.ClassLoader.loadClass
+  [43] java.lang.Class.forName0
+  [44] java.lang.Class.forName
+  [45] sun.launcher.LauncherHelper.loadMainClass
+  [46] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.jar.Attributes.put
+  [ 5] java.util.jar.Attributes.putValue
+  [ 6] java.util.jar.Attributes.read
+  [ 7] java.util.jar.Manifest.read
+  [ 8] java.util.jar.Manifest.<init>
+  [ 9] java.util.jar.Manifest.<init>
+  [10] java.util.jar.JarFile.getManifestFromReference
+  [11] java.util.jar.JarFile.getManifest
+  [12] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [13] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] TypeArrayKlass::allocate_common
+  [ 2] java_lang_String::basic_create
+  [ 3] java_lang_String::create_from_unicode
+  [ 4] java_lang_String::create_oop_from_unicode
+  [ 5] jni_NewString
+  [ 6] newSizedString8859_1
+  [ 7] JNU_NewStringPlatform
+  [ 8] Java_java_io_UnixFileSystem_canonicalize0
+  [ 9] java.io.UnixFileSystem.canonicalize0
+  [10] java.io.UnixFileSystem.canonicalize
+  [11] java.io.File.getCanonicalPath
+  [12] jdk.internal.loader.NativeLibraries$1.run
+  [13] jdk.internal.loader.NativeLibraries$1.run
+  [14] java.security.AccessController.executePrivileged
+  [15] java.security.AccessController.doPrivileged
+  [16] jdk.internal.loader.NativeLibraries.loadLibrary
+  [17] jdk.internal.loader.NativeLibraries.findFromPaths
+  [18] jdk.internal.loader.NativeLibraries.loadLibrary
+  [19] jdk.internal.loader.NativeLibraries.loadLibrary
+  [20] jdk.internal.loader.BootLoader.loadLibrary
+  [21] java.util.zip.ZipUtils.loadLibrary
+  [22] java.util.zip.Inflater.<clinit>
+  [23] java.util.zip.ZipFile$CleanableResource.getInflater
+  [24] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [25] java.util.zip.ZipFile.getInputStream
+  [26] java.util.jar.JarFile.getBytes
+  [27] java.util.jar.JarFile.checkForSpecialAttributes
+  [28] java.util.jar.JarFile.isMultiRelease
+  [29] java.util.jar.JarFile.getEntry
+  [30] java.util.jar.JarFile.getJarEntry
+  [31] jdk.internal.util.jar.JarIndex.getJarIndex
+  [32] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [33] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [34] java.security.AccessController.executePrivileged
+  [35] java.security.AccessController.doPrivileged
+  [36] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [37] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [38] jdk.internal.loader.URLClassPath$3.run
+  [39] jdk.internal.loader.URLClassPath$3.run
+  [40] java.security.AccessController.executePrivileged
+  [41] java.security.AccessController.doPrivileged
+  [42] jdk.internal.loader.URLClassPath.getLoader
+  [43] jdk.internal.loader.URLClassPath.getLoader
+  [44] jdk.internal.loader.URLClassPath.getResource
+  [45] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [46] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [47] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [48] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [49] java.lang.ClassLoader.loadClass
+  [50] java.lang.Class.forName0
+  [51] java.lang.Class.forName
+  [52] sun.launcher.LauncherHelper.loadMainClass
+  [53] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] java.io.UnixFileSystem.resolve
+  [ 5] java.io.File.<init>
+  [ 6] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 7] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.BootLoader.loadLibrary
+  [10] java.util.zip.ZipUtils.loadLibrary
+  [11] java.util.zip.CRC32.<clinit>
+  [12] jdk.internal.loader.URLClassPath$JarLoader$2.getBytes
+  [13] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] java.io.UnixFileSystem.resolve
+  [ 5] java.io.File.<init>
+  [ 6] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 7] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.BootLoader.loadLibrary
+  [10] java.util.zip.ZipUtils.loadLibrary
+  [11] java.util.zip.Inflater.<clinit>
+  [12] java.util.zip.ZipFile$CleanableResource.getInflater
+  [13] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [14] java.util.zip.ZipFile.getInputStream
+  [15] java.util.jar.JarFile.getBytes
+  [16] java.util.jar.JarFile.checkForSpecialAttributes
+  [17] java.util.jar.JarFile.isMultiRelease
+  [18] java.util.jar.JarFile.getEntry
+  [19] java.util.jar.JarFile.getJarEntry
+  [20] jdk.internal.util.jar.JarIndex.getJarIndex
+  [21] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [22] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [23] java.security.AccessController.executePrivileged
+  [24] java.security.AccessController.doPrivileged
+  [25] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [26] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [27] jdk.internal.loader.URLClassPath$3.run
+  [28] jdk.internal.loader.URLClassPath$3.run
+  [29] java.security.AccessController.executePrivileged
+  [30] java.security.AccessController.doPrivileged
+  [31] jdk.internal.loader.URLClassPath.getLoader
+  [32] jdk.internal.loader.URLClassPath.getLoader
+  [33] jdk.internal.loader.URLClassPath.getResource
+  [34] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [35] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [36] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [37] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [38] java.lang.ClassLoader.loadClass
+  [39] java.lang.Class.forName0
+  [40] java.lang.Class.forName
+  [41] sun.launcher.LauncherHelper.loadMainClass
+  [42] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.putVal
+  [ 3] java.util.concurrent.ConcurrentHashMap.putIfAbsent
+  [ 4] java.lang.ClassLoader.getClassLoadingLock
+  [ 5] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 6] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 7] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 8] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [ 9] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [10] java.lang.ClassLoader.loadClass
+  [11] java.lang.Class.forName0
+  [12] java.lang.Class.forName
+  [13] sun.launcher.LauncherHelper.loadMainClass
+  [14] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.Locale.createConstant
+  [ 5] java.util.Locale.<clinit>
+  [ 6] java.lang.String.toLowerCase
+  [ 7] sun.net.util.URLUtil.urlNoFragString
+  [ 8] jdk.internal.loader.URLClassPath.getLoader
+  [ 9] jdk.internal.loader.URLClassPath.getResource
+  [10] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [13] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [14] java.lang.ClassLoader.loadClass
+  [15] java.lang.Class.forName0
+  [16] java.lang.Class.forName
+  [17] sun.launcher.LauncherHelper.loadMainClass
+  [18] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.lang.Object[]
+  [ 1] java.util.IdentityHashMap.init
+  [ 2] java.util.IdentityHashMap.<init>
+  [ 3] jdk.internal.misc.TerminatingThreadLocal$1.initialValue
+  [ 4] jdk.internal.misc.TerminatingThreadLocal$1.initialValue
+  [ 5] java.lang.ThreadLocal.setInitialValue
+  [ 6] java.lang.ThreadLocal.get
+  [ 7] jdk.internal.misc.TerminatingThreadLocal.register
+  [ 8] java.lang.ThreadLocal.setInitialValue
+  [ 9] java.lang.ThreadLocal.get
+  [10] sun.nio.fs.NativeBuffers.getNativeBufferFromCache
+  [11] sun.nio.fs.UnixNativeDispatcher.copyToNativeBuffer
+  [12] sun.nio.fs.UnixNativeDispatcher.stat
+  [13] sun.nio.fs.UnixFileAttributes.get
+  [14] sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes
+  [15] sun.nio.fs.UnixFileSystemProvider.readAttributes
+  [16] sun.nio.fs.LinuxFileSystemProvider.readAttributes
+  [17] java.nio.file.Files.readAttributes
+  [18] java.util.zip.ZipFile$Source.get
+  [19] java.util.zip.ZipFile$CleanableResource.<init>
+  [20] java.util.zip.ZipFile.<init>
+  [21] java.util.zip.ZipFile.<init>
+  [22] java.util.jar.JarFile.<init>
+  [23] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [24] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [25] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [26] java.security.AccessController.executePrivileged
+  [27] java.security.AccessController.doPrivileged
+  [28] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [29] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [30] jdk.internal.loader.URLClassPath$3.run
+  [31] jdk.internal.loader.URLClassPath$3.run
+  [32] java.security.AccessController.executePrivileged
+  [33] java.security.AccessController.doPrivileged
+  [34] jdk.internal.loader.URLClassPath.getLoader
+  [35] jdk.internal.loader.URLClassPath.getLoader
+  [36] jdk.internal.loader.URLClassPath.getResource
+  [37] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [38] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [39] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [40] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [41] java.lang.ClassLoader.loadClass
+  [42] java.lang.Class.forName0
+  [43] java.lang.Class.forName
+  [44] sun.launcher.LauncherHelper.loadMainClass
+  [45] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] TypeArrayKlass::allocate_common
+  [ 2] java_lang_String::basic_create
+  [ 3] java_lang_String::create_from_unicode
+  [ 4] java_lang_String::create_oop_from_unicode
+  [ 5] jni_NewString
+  [ 6] newSizedString8859_1
+  [ 7] JNU_NewStringPlatform
+  [ 8] Java_java_io_UnixFileSystem_canonicalize0
+  [ 9] java.io.UnixFileSystem.canonicalize0
+  [10] java.io.UnixFileSystem.canonicalize
+  [11] java.io.File.getCanonicalPath
+  [12] jdk.internal.loader.NativeLibraries$1.run
+  [13] jdk.internal.loader.NativeLibraries$1.run
+  [14] java.security.AccessController.executePrivileged
+  [15] java.security.AccessController.doPrivileged
+  [16] jdk.internal.loader.NativeLibraries.loadLibrary
+  [17] jdk.internal.loader.NativeLibraries.findFromPaths
+  [18] jdk.internal.loader.NativeLibraries.loadLibrary
+  [19] jdk.internal.loader.NativeLibraries.loadLibrary
+  [20] jdk.internal.loader.BootLoader.loadLibrary
+  [21] java.util.zip.ZipUtils.loadLibrary
+  [22] java.util.zip.CRC32.<clinit>
+  [23] jdk.internal.loader.URLClassPath$JarLoader$2.getBytes
+  [24] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [25] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [27] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [28] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [29] java.lang.ClassLoader.loadClass
+  [30] java.lang.Class.forName0
+  [31] java.lang.Class.forName
+  [32] sun.launcher.LauncherHelper.loadMainClass
+  [33] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap$Node[]
+  [ 1] java.util.concurrent.ConcurrentHashMap.initTable
+  [ 2] java.util.concurrent.ConcurrentHashMap.computeIfAbsent
+  [ 3] java.security.SecureClassLoader.getProtectionDomain
+  [ 4] java.security.SecureClassLoader.defineClass
+  [ 5] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [ 6] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 7] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 8] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [ 9] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [10] java.lang.ClassLoader.loadClass
+  [11] java.lang.Class.forName0
+  [12] java.lang.Class.forName
+  [13] sun.launcher.LauncherHelper.loadMainClass
+  [14] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] java.util.HashMap$Node[]
+  [ 1] java.util.HashMap.resize
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] jdk.internal.loader.URLClassPath.getLoader
+  [ 5] jdk.internal.loader.URLClassPath.getResource
+  [ 6] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 7] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 8] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [ 9] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [10] java.lang.ClassLoader.loadClass
+  [11] java.lang.Class.forName0
+  [12] java.lang.Class.forName
+  [13] sun.launcher.LauncherHelper.loadMainClass
+  [14] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.jar.JarFile.getBytes
+  [ 2] java.util.jar.JarFile.checkForSpecialAttributes
+  [ 3] java.util.jar.JarFile.isMultiRelease
+  [ 4] java.util.jar.JarFile.getEntry
+  [ 5] java.util.jar.JarFile.getJarEntry
+  [ 6] jdk.internal.util.jar.JarIndex.getJarIndex
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 9] java.security.AccessController.executePrivileged
+  [10] java.security.AccessController.doPrivileged
+  [11] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [12] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [13] jdk.internal.loader.URLClassPath$3.run
+  [14] jdk.internal.loader.URLClassPath$3.run
+  [15] java.security.AccessController.executePrivileged
+  [16] java.security.AccessController.doPrivileged
+  [17] jdk.internal.loader.URLClassPath.getLoader
+  [18] jdk.internal.loader.URLClassPath.getLoader
+  [19] jdk.internal.loader.URLClassPath.getResource
+  [20] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [21] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [22] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [23] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [24] java.lang.ClassLoader.loadClass
+  [25] java.lang.Class.forName0
+  [26] java.lang.Class.forName
+  [27] sun.launcher.LauncherHelper.loadMainClass
+  [28] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 80 bytes (0.19%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.StringLatin1.newString
+  [ 3] java.lang.StringBuilder.toString
+  [ 4] java.io.UnixFileSystem.resolve
+  [ 5] java.io.File.<init>
+  [ 6] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 7] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.BootLoader.loadLibrary
+  [10] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [11] sun.nio.fs.UnixFileSystem.<init>
+  [12] sun.nio.fs.LinuxFileSystem.<init>
+  [13] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [14] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [15] sun.nio.fs.UnixFileSystemProvider.<init>
+  [16] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [17] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [18] java.util.zip.ZipFile$Source.<clinit>
+  [19] java.util.zip.ZipFile$CleanableResource.<init>
+  [20] java.util.zip.ZipFile.<init>
+  [21] java.util.zip.ZipFile.<init>
+  [22] java.util.jar.JarFile.<init>
+  [23] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [24] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [25] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [26] java.security.AccessController.executePrivileged
+  [27] java.security.AccessController.doPrivileged
+  [28] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [29] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [30] jdk.internal.loader.URLClassPath$3.run
+  [31] jdk.internal.loader.URLClassPath$3.run
+  [32] java.security.AccessController.executePrivileged
+  [33] java.security.AccessController.doPrivileged
+  [34] jdk.internal.loader.URLClassPath.getLoader
+  [35] jdk.internal.loader.URLClassPath.getLoader
+  [36] jdk.internal.loader.URLClassPath.getResource
+  [37] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [38] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [39] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [40] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [41] java.lang.ClassLoader.loadClass
+  [42] java.lang.Class.forName0
+  [43] java.lang.Class.forName
+  [44] sun.launcher.LauncherHelper.loadMainClass
+  [45] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 72 bytes (0.17%), 2 samples
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.String.<init>
+  [ 3] java.util.jar.Attributes.read
+  [ 4] java.util.jar.Manifest.read
+  [ 5] java.util.jar.Manifest.<init>
+  [ 6] java.util.jar.Manifest.<init>
+  [ 7] java.util.jar.JarFile.getManifestFromReference
+  [ 8] java.util.jar.JarFile.getManifest
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [10] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [11] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [14] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [15] java.lang.ClassLoader.loadClass
+  [16] java.lang.Class.forName0
+  [17] java.lang.Class.forName
+  [18] sun.launcher.LauncherHelper.loadMainClass
+  [19] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 2 samples
+  [ 0] java.util.HashMap$Node
+  [ 1] java.util.HashMap.newNode
+  [ 2] java.util.HashMap.putVal
+  [ 3] java.util.HashMap.put
+  [ 4] java.util.HashSet.add
+  [ 5] sun.nio.fs.Util.newSet
+  [ 6] sun.nio.fs.AbstractBasicFileAttributeView.<clinit>
+  [ 7] sun.nio.fs.UnixFileAttributeViews.createBasicView
+  [ 8] sun.nio.fs.UnixFileSystemProvider.getFileAttributeView
+  [ 9] sun.nio.fs.LinuxFileSystemProvider.getFileAttributeView
+  [10] sun.nio.fs.UnixFileSystemProvider.readAttributes
+  [11] sun.nio.fs.LinuxFileSystemProvider.readAttributes
+  [12] java.nio.file.Files.readAttributes
+  [13] java.util.zip.ZipFile$Source.get
+  [14] java.util.zip.ZipFile$CleanableResource.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.zip.ZipFile.<init>
+  [17] java.util.jar.JarFile.<init>
+  [18] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [21] java.security.AccessController.executePrivileged
+  [22] java.security.AccessController.doPrivileged
+  [23] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [24] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] jdk.internal.loader.URLClassPath$3.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getLoader
+  [31] jdk.internal.loader.URLClassPath.getResource
+  [32] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [34] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [35] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [36] java.lang.ClassLoader.loadClass
+  [37] java.lang.Class.forName0
+  [38] java.lang.Class.forName
+  [39] sun.launcher.LauncherHelper.loadMainClass
+  [40] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 4 samples
+  [ 0] int[]
+  [ 1] java.util.concurrent.ConcurrentHashMap$ValuesView.iterator
+  [ 2] jdk.internal.loader.NativeLibraries.find
+  [ 3] java.lang.ClassLoader.findNative
+  [ 4] sun.nio.fs.UnixNativeDispatcher.init
+  [ 5] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [ 6] sun.nio.fs.UnixFileSystem.<init>
+  [ 7] sun.nio.fs.LinuxFileSystem.<init>
+  [ 8] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [ 9] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [10] sun.nio.fs.UnixFileSystemProvider.<init>
+  [11] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [12] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [13] java.util.zip.ZipFile$Source.<clinit>
+  [14] java.util.zip.ZipFile$CleanableResource.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.zip.ZipFile.<init>
+  [17] java.util.jar.JarFile.<init>
+  [18] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [21] java.security.AccessController.executePrivileged
+  [22] java.security.AccessController.doPrivileged
+  [23] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [24] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] jdk.internal.loader.URLClassPath$3.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getLoader
+  [31] jdk.internal.loader.URLClassPath.getResource
+  [32] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [34] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [35] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [36] java.lang.ClassLoader.loadClass
+  [37] java.lang.Class.forName0
+  [38] java.lang.Class.forName
+  [39] sun.launcher.LauncherHelper.loadMainClass
+  [40] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] TypeArrayKlass::allocate_common
+  [ 2] jni_NewByteArray
+  [ 3] Java_sun_nio_fs_UnixNativeDispatcher_getcwd
+  [ 4] sun.nio.fs.UnixNativeDispatcher.getcwd
+  [ 5] sun.nio.fs.UnixFileSystem.<init>
+  [ 6] sun.nio.fs.LinuxFileSystem.<init>
+  [ 7] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [ 8] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [ 9] sun.nio.fs.UnixFileSystemProvider.<init>
+  [10] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [11] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [12] java.util.zip.ZipFile$Source.<clinit>
+  [13] java.util.zip.ZipFile$CleanableResource.<init>
+  [14] java.util.zip.ZipFile.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.jar.JarFile.<init>
+  [17] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [18] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] java.security.AccessController.executePrivileged
+  [21] java.security.AccessController.doPrivileged
+  [22] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [23] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [24] jdk.internal.loader.URLClassPath$3.run
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] java.security.AccessController.executePrivileged
+  [27] java.security.AccessController.doPrivileged
+  [28] jdk.internal.loader.URLClassPath.getLoader
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getResource
+  [31] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [32] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [34] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [35] java.lang.ClassLoader.loadClass
+  [36] java.lang.Class.forName0
+  [37] java.lang.Class.forName
+  [38] sun.launcher.LauncherHelper.loadMainClass
+  [39] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.String.encodeUTF8
+  [ 3] java.lang.String.encode
+  [ 4] java.lang.String.getBytes
+  [ 5] sun.nio.fs.Util.toBytes
+  [ 6] sun.nio.fs.UnixFileSystem.<init>
+  [ 7] sun.nio.fs.LinuxFileSystem.<init>
+  [ 8] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [ 9] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [10] sun.nio.fs.UnixFileSystemProvider.<init>
+  [11] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [12] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [13] java.util.zip.ZipFile$Source.<clinit>
+  [14] java.util.zip.ZipFile$CleanableResource.<init>
+  [15] java.util.zip.ZipFile.<init>
+  [16] java.util.zip.ZipFile.<init>
+  [17] java.util.jar.JarFile.<init>
+  [18] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [19] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [20] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [21] java.security.AccessController.executePrivileged
+  [22] java.security.AccessController.doPrivileged
+  [23] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [24] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [25] jdk.internal.loader.URLClassPath$3.run
+  [26] jdk.internal.loader.URLClassPath$3.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath.getLoader
+  [30] jdk.internal.loader.URLClassPath.getLoader
+  [31] jdk.internal.loader.URLClassPath.getResource
+  [32] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [33] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [34] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [35] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [36] java.lang.ClassLoader.loadClass
+  [37] java.lang.Class.forName0
+  [38] java.lang.Class.forName
+  [39] sun.launcher.LauncherHelper.loadMainClass
+  [40] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.lang.Class$ReflectionData
+  [ 1] java.lang.Class.newReflectionData
+  [ 2] java.lang.Class.reflectionData
+  [ 3] java.lang.Class.privateGetDeclaredMethods
+  [ 4] java.lang.Class.getMethodsRecursive
+  [ 5] java.lang.Class.getMethod0
+  [ 6] java.lang.Class.getMethod
+  [ 7] sun.launcher.LauncherHelper.validateMainClass
+  [ 8] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] sun.nio.fs.UnixNativeDispatcher.getcwd
+  [ 2] sun.nio.fs.UnixFileSystem.<init>
+  [ 3] sun.nio.fs.LinuxFileSystem.<init>
+  [ 4] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [ 5] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [ 6] sun.nio.fs.UnixFileSystemProvider.<init>
+  [ 7] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [ 8] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [ 9] java.util.zip.ZipFile$Source.<clinit>
+  [10] java.util.zip.ZipFile$CleanableResource.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.zip.ZipFile.<init>
+  [13] java.util.jar.JarFile.<init>
+  [14] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [17] java.security.AccessController.executePrivileged
+  [18] java.security.AccessController.doPrivileged
+  [19] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [20] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] jdk.internal.loader.URLClassPath$3.run
+  [23] java.security.AccessController.executePrivileged
+  [24] java.security.AccessController.doPrivileged
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getLoader
+  [27] jdk.internal.loader.URLClassPath.getResource
+  [28] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [30] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [31] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [32] java.lang.ClassLoader.loadClass
+  [33] java.lang.Class.forName0
+  [34] java.lang.Class.forName
+  [35] sun.launcher.LauncherHelper.loadMainClass
+  [36] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 2 samples
+  [ 0] byte[]
+  [ 1] test.alloc.Hello.main
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.io.UnixFileSystem.resolve
+  [ 6] java.io.File.<init>
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] java.util.zip.ZipUtils.loadLibrary
+  [12] java.util.zip.Inflater.<clinit>
+  [13] java.util.zip.ZipFile$CleanableResource.getInflater
+  [14] java.util.zip.ZipFile$ZipFileInflaterInputStream.<init>
+  [15] java.util.zip.ZipFile.getInputStream
+  [16] java.util.jar.JarFile.getBytes
+  [17] java.util.jar.JarFile.checkForSpecialAttributes
+  [18] java.util.jar.JarFile.isMultiRelease
+  [19] java.util.jar.JarFile.getEntry
+  [20] java.util.jar.JarFile.getJarEntry
+  [21] jdk.internal.util.jar.JarIndex.getJarIndex
+  [22] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [23] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [24] java.security.AccessController.executePrivileged
+  [25] java.security.AccessController.doPrivileged
+  [26] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [27] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [28] jdk.internal.loader.URLClassPath$3.run
+  [29] jdk.internal.loader.URLClassPath$3.run
+  [30] java.security.AccessController.executePrivileged
+  [31] java.security.AccessController.doPrivileged
+  [32] jdk.internal.loader.URLClassPath.getLoader
+  [33] jdk.internal.loader.URLClassPath.getLoader
+  [34] jdk.internal.loader.URLClassPath.getResource
+  [35] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [36] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [37] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [38] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [39] java.lang.ClassLoader.loadClass
+  [40] java.lang.Class.forName0
+  [41] java.lang.Class.forName
+  [42] sun.launcher.LauncherHelper.loadMainClass
+  [43] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.net.URL
+  [ 1] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [ 2] jdk.internal.loader.URLClassPath$3.run
+  [ 3] jdk.internal.loader.URLClassPath$3.run
+  [ 4] java.security.AccessController.executePrivileged
+  [ 5] java.security.AccessController.doPrivileged
+  [ 6] jdk.internal.loader.URLClassPath.getLoader
+  [ 7] jdk.internal.loader.URLClassPath.getLoader
+  [ 8] jdk.internal.loader.URLClassPath.getResource
+  [ 9] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [10] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [11] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [12] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [13] java.lang.ClassLoader.loadClass
+  [14] java.lang.Class.forName0
+  [15] java.lang.Class.forName
+  [16] sun.launcher.LauncherHelper.loadMainClass
+  [17] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.io.UnixFileSystem.resolve
+  [ 6] java.io.File.<init>
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] sun.nio.fs.UnixNativeDispatcher.<clinit>
+  [12] sun.nio.fs.UnixFileSystem.<init>
+  [13] sun.nio.fs.LinuxFileSystem.<init>
+  [14] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [15] sun.nio.fs.LinuxFileSystemProvider.newFileSystem
+  [16] sun.nio.fs.UnixFileSystemProvider.<init>
+  [17] sun.nio.fs.LinuxFileSystemProvider.<init>
+  [18] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [19] java.util.zip.ZipFile$Source.<clinit>
+  [20] java.util.zip.ZipFile$CleanableResource.<init>
+  [21] java.util.zip.ZipFile.<init>
+  [22] java.util.zip.ZipFile.<init>
+  [23] java.util.jar.JarFile.<init>
+  [24] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [25] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [26] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [27] java.security.AccessController.executePrivileged
+  [28] java.security.AccessController.doPrivileged
+  [29] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [30] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [31] jdk.internal.loader.URLClassPath$3.run
+  [32] jdk.internal.loader.URLClassPath$3.run
+  [33] java.security.AccessController.executePrivileged
+  [34] java.security.AccessController.doPrivileged
+  [35] jdk.internal.loader.URLClassPath.getLoader
+  [36] jdk.internal.loader.URLClassPath.getLoader
+  [37] jdk.internal.loader.URLClassPath.getResource
+  [38] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [39] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [40] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [41] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [42] java.lang.ClassLoader.loadClass
+  [43] java.lang.Class.forName0
+  [44] java.lang.Class.forName
+  [45] sun.launcher.LauncherHelper.loadMainClass
+  [46] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.net.URL
+  [ 1] jdk.internal.loader.URLClassPath$JarLoader.checkResource
+  [ 2] jdk.internal.loader.URLClassPath$JarLoader.getResource
+  [ 3] jdk.internal.loader.URLClassPath.getResource
+  [ 4] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [ 5] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [ 6] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [ 7] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [ 8] java.lang.ClassLoader.loadClass
+  [ 9] java.lang.Class.forName0
+  [10] java.lang.Class.forName
+  [11] sun.launcher.LauncherHelper.loadMainClass
+  [12] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 4 samples
+  [ 0] int[]
+  [ 1] sun.nio.fs.DefaultFileSystemProvider.<clinit>
+  [ 2] java.util.zip.ZipFile$Source.<clinit>
+  [ 3] java.util.zip.ZipFile$CleanableResource.<init>
+  [ 4] java.util.zip.ZipFile.<init>
+  [ 5] java.util.zip.ZipFile.<init>
+  [ 6] java.util.jar.JarFile.<init>
+  [ 7] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [ 8] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [10] java.security.AccessController.executePrivileged
+  [11] java.security.AccessController.doPrivileged
+  [12] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [13] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [14] jdk.internal.loader.URLClassPath$3.run
+  [15] jdk.internal.loader.URLClassPath$3.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath.getLoader
+  [19] jdk.internal.loader.URLClassPath.getLoader
+  [20] jdk.internal.loader.URLClassPath.getResource
+  [21] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [22] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [23] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [24] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [25] java.lang.ClassLoader.loadClass
+  [26] java.lang.Class.forName0
+  [27] java.lang.Class.forName
+  [28] sun.launcher.LauncherHelper.loadMainClass
+  [29] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.nio.DirectByteBuffer
+  [ 1] InstanceKlass::allocate_instance
+  [ 2] jni_NewObjectV
+  [ 3] JNIEnv_::NewObject
+  [ 4] Perf_CreateLong
+  [ 5] jdk.internal.perf.Perf.createLong
+  [ 6] jdk.internal.perf.PerfCounter.<init>
+  [ 7] jdk.internal.perf.PerfCounter.newPerfCounter
+  [ 8] jdk.internal.perf.PerfCounter$CoreCounters.<clinit>
+  [ 9] jdk.internal.perf.PerfCounter.getZipFileOpenTime
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap
+  [ 1] java.security.Permissions.<init>
+  [ 2] java.security.SecureClassLoader.getPermissions
+  [ 3] jdk.internal.loader.BuiltinClassLoader.getPermissions
+  [ 4] jdk.internal.loader.ClassLoaders$AppClassLoader.getPermissions
+  [ 5] java.security.SecureClassLoader$1.apply
+  [ 6] java.security.SecureClassLoader$1.apply
+  [ 7] java.util.concurrent.ConcurrentHashMap.computeIfAbsent
+  [ 8] java.security.SecureClassLoader.getProtectionDomain
+  [ 9] java.security.SecureClassLoader.defineClass
+  [10] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [11] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [14] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [15] java.lang.ClassLoader.loadClass
+  [16] java.lang.Class.forName0
+  [17] java.lang.Class.forName
+  [18] sun.launcher.LauncherHelper.loadMainClass
+  [19] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.nio.DirectByteBuffer
+  [ 1] InstanceKlass::allocate_instance
+  [ 2] jni_NewObjectV
+  [ 3] JNIEnv_::NewObject
+  [ 4] Perf_CreateLong
+  [ 5] jdk.internal.perf.Perf.createLong
+  [ 6] jdk.internal.perf.PerfCounter.<init>
+  [ 7] jdk.internal.perf.PerfCounter.newPerfCounter
+  [ 8] jdk.internal.perf.PerfCounter$CoreCounters.<clinit>
+  [ 9] jdk.internal.perf.PerfCounter.getZipFileOpenTime
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.util.concurrent.ConcurrentHashMap
+  [ 1] java.security.BasicPermissionCollection.<init>
+  [ 2] java.security.BasicPermission.newPermissionCollection
+  [ 3] java.security.Permissions.createPermissionCollection
+  [ 4] java.security.Permissions.getPermissionCollection
+  [ 5] java.security.Permissions.add
+  [ 6] sun.security.util.LazyCodeSourcePermissionCollection.add
+  [ 7] jdk.internal.loader.ClassLoaders$AppClassLoader.getPermissions
+  [ 8] java.security.SecureClassLoader$1.apply
+  [ 9] java.security.SecureClassLoader$1.apply
+  [10] java.util.concurrent.ConcurrentHashMap.computeIfAbsent
+  [11] java.security.SecureClassLoader.getProtectionDomain
+  [12] java.security.SecureClassLoader.defineClass
+  [13] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [14] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [15] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [17] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [18] java.lang.ClassLoader.loadClass
+  [19] java.lang.Class.forName0
+  [20] java.lang.Class.forName
+  [21] sun.launcher.LauncherHelper.loadMainClass
+  [22] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 2 samples
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOfRange
+  [ 2] java.lang.String.<init>
+  [ 3] java.util.jar.Attributes.read
+  [ 4] java.util.jar.Manifest.read
+  [ 5] java.util.jar.Manifest.<init>
+  [ 6] java.util.jar.Manifest.<init>
+  [ 7] java.util.jar.JarFile.getManifestFromReference
+  [ 8] java.util.jar.JarFile.getManifest
+  [ 9] jdk.internal.loader.URLClassPath$JarLoader$2.getManifest
+  [10] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [11] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [12] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [13] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [14] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [15] java.lang.ClassLoader.loadClass
+  [16] java.lang.Class.forName0
+  [17] java.lang.Class.forName
+  [18] sun.launcher.LauncherHelper.loadMainClass
+  [19] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.Arrays.copyOf
+  [ 2] java.lang.AbstractStringBuilder.ensureCapacityInternal
+  [ 3] java.lang.AbstractStringBuilder.append
+  [ 4] java.lang.StringBuilder.append
+  [ 5] java.io.UnixFileSystem.resolve
+  [ 6] java.io.File.<init>
+  [ 7] jdk.internal.loader.NativeLibraries.findFromPaths
+  [ 8] jdk.internal.loader.NativeLibraries.loadLibrary
+  [ 9] jdk.internal.loader.NativeLibraries.loadLibrary
+  [10] jdk.internal.loader.BootLoader.loadLibrary
+  [11] java.util.zip.ZipUtils.loadLibrary
+  [12] java.util.zip.CRC32.<clinit>
+  [13] jdk.internal.loader.URLClassPath$JarLoader$2.getBytes
+  [14] jdk.internal.loader.BuiltinClassLoader.defineClass
+  [15] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [16] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [17] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [18] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [19] java.lang.ClassLoader.loadClass
+  [20] java.lang.Class.forName0
+  [21] java.lang.Class.forName
+  [22] sun.launcher.LauncherHelper.loadMainClass
+  [23] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] byte[]
+  [ 1] java.util.zip.Inflater.inflateBytesBytes
+  [ 2] java.util.zip.Inflater.inflate
+  [ 3] java.util.zip.InflaterInputStream.read
+  [ 4] java.io.InputStream.readNBytes
+  [ 5] java.util.jar.JarFile.getBytes
+  [ 6] java.util.jar.JarFile.checkForSpecialAttributes
+  [ 7] java.util.jar.JarFile.isMultiRelease
+  [ 8] java.util.jar.JarFile.getEntry
+  [ 9] java.util.jar.JarFile.getJarEntry
+  [10] jdk.internal.util.jar.JarIndex.getJarIndex
+  [11] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [12] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [13] java.security.AccessController.executePrivileged
+  [14] java.security.AccessController.doPrivileged
+  [15] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [16] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [17] jdk.internal.loader.URLClassPath$3.run
+  [18] jdk.internal.loader.URLClassPath$3.run
+  [19] java.security.AccessController.executePrivileged
+  [20] java.security.AccessController.doPrivileged
+  [21] jdk.internal.loader.URLClassPath.getLoader
+  [22] jdk.internal.loader.URLClassPath.getLoader
+  [23] jdk.internal.loader.URLClassPath.getResource
+  [24] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [25] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [26] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [27] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [28] java.lang.ClassLoader.loadClass
+  [29] java.lang.Class.forName0
+  [30] java.lang.Class.forName
+  [31] sun.launcher.LauncherHelper.loadMainClass
+  [32] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.nio.DirectByteBuffer
+  [ 1] InstanceKlass::allocate_instance
+  [ 2] jni_NewObjectV
+  [ 3] JNIEnv_::NewObject
+  [ 4] Perf_CreateLong
+  [ 5] jdk.internal.perf.Perf.createLong
+  [ 6] jdk.internal.perf.PerfCounter.<init>
+  [ 7] jdk.internal.perf.PerfCounter.newPerfCounter
+  [ 8] jdk.internal.perf.PerfCounter$CoreCounters.<clinit>
+  [ 9] jdk.internal.perf.PerfCounter.getZipFileOpenTime
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+--- 64 bytes (0.15%), 1 sample
+  [ 0] java.nio.DirectByteBuffer
+  [ 1] InstanceKlass::allocate_instance
+  [ 2] jni_NewObjectV
+  [ 3] JNIEnv_::NewObject
+  [ 4] Perf_CreateLong
+  [ 5] jdk.internal.perf.Perf.createLong
+  [ 6] jdk.internal.perf.PerfCounter.<init>
+  [ 7] jdk.internal.perf.PerfCounter.newPerfCounter
+  [ 8] jdk.internal.perf.PerfCounter$CoreCounters.<clinit>
+  [ 9] jdk.internal.perf.PerfCounter.getZipFileOpenTime
+  [10] java.util.zip.ZipFile.<init>
+  [11] java.util.zip.ZipFile.<init>
+  [12] java.util.jar.JarFile.<init>
+  [13] jdk.internal.loader.URLClassPath$JarLoader.getJarFile
+  [14] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [15] jdk.internal.loader.URLClassPath$JarLoader$1.run
+  [16] java.security.AccessController.executePrivileged
+  [17] java.security.AccessController.doPrivileged
+  [18] jdk.internal.loader.URLClassPath$JarLoader.ensureOpen
+  [19] jdk.internal.loader.URLClassPath$JarLoader.<init>
+  [20] jdk.internal.loader.URLClassPath$3.run
+  [21] jdk.internal.loader.URLClassPath$3.run
+  [22] java.security.AccessController.executePrivileged
+  [23] java.security.AccessController.doPrivileged
+  [24] jdk.internal.loader.URLClassPath.getLoader
+  [25] jdk.internal.loader.URLClassPath.getLoader
+  [26] jdk.internal.loader.URLClassPath.getResource
+  [27] jdk.internal.loader.BuiltinClassLoader.findClassOnClassPathOrNull
+  [28] jdk.internal.loader.BuiltinClassLoader.loadClassOrNull
+  [29] jdk.internal.loader.BuiltinClassLoader.loadClass
+  [30] jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass
+  [31] java.lang.ClassLoader.loadClass
+  [32] java.lang.Class.forName0
+  [33] java.lang.Class.forName
+  [34] sun.launcher.LauncherHelper.loadMainClass
+  [35] sun.launcher.LauncherHelper.checkAndLoadMain
+
+       bytes  percent  samples  top
+  ----------  -------  -------  ---
+       22400   53.44%      133  byte[]
+        3648    8.70%      167  int[]
+        1776    4.24%       74  java.lang.String
+        1024    2.44%       32  java.util.HashMap$Node
+         624    1.49%        7  java.util.HashMap$Node[]
+         608    1.45%       19  java.util.Locale
+         560    1.34%        7  java.util.concurrent.ConcurrentHashMap$Node[]
+         560    1.34%        7  java.util.concurrent.TimeUnit
+         488    1.16%       10  java.lang.Object[]
+         440    1.05%       11  java.io.ObjectStreamField
+         416    0.99%       13  java.util.concurrent.ConcurrentHashMap$Node
+         392    0.94%        7  java.util.concurrent.ConcurrentHashMap$ValueIterator
+         384    0.92%        6  java.nio.DirectByteBuffer
+         376    0.90%        1  jdk.internal.misc.InnocuousThread
+         368    0.88%        1  java.lang.Thread
+         336    0.80%        7  jdk.internal.ref.CleanerImpl$PhantomCleanableRef
+         336    0.80%        6  java.nio.DirectLongBufferU
+         264    0.63%       11  java.lang.StringBuilder
+         240    0.57%       10  java.nio.file.StandardOpenOption
+         240    0.57%       10  java.nio.charset.CoderResult
+         208    0.50%        2  java.util.jar.JarFile$JarFileEntry
+         192    0.46%        4  java.util.HashMap
+         192    0.46%        6  java.io.File
+         184    0.44%        6  java.lang.String[]
+         176    0.42%       11  java.lang.Object
+         176    0.42%        2  java.lang.reflect.Method
+         168    0.40%        3  java.util.zip.ZipFile$ZipFileInflaterInputStream
+         168    0.40%        3  java.util.zip.ZipFile$ZipFileInputStream
+         144    0.34%        6  jdk.internal.perf.PerfCounter
+         136    0.32%        1  sun.nio.fs.UnixFileAttributes
+         128    0.31%        2  java.util.concurrent.ConcurrentHashMap
+         128    0.31%        2  java.net.URL
+         120    0.29%        3  java.util.WeakHashMap$Entry
+         120    0.29%        3  java.security.AccessControlContext
+         112    0.27%        1  java.lang.Class
+          96    0.23%        3  java.lang.Runtime$Version
+          96    0.23%        3  java.io.ObjectStreamField[]
+          80    0.19%        2  java.security.ProtectionDomain
+          80    0.19%        2  java.util.LinkedHashMap$Entry
+          80    0.19%        2  java.lang.ref.SoftReference
+          80    0.19%        1  java.util.zip.ZipFile$Source
+          80    0.19%        1  java.lang.ThreadLocal$ThreadLocalMap$Entry[]
+          80    0.19%        2  jdk.internal.loader.NativeLibraries$NativeLibraryImpl
+          80    0.19%        1  java.util.WeakHashMap$Entry[]
+          72    0.17%        3  java.util.concurrent.atomic.AtomicLong
+          72    0.17%        3  jdk.internal.loader.NativeLibraries$1
+          72    0.17%        3  java.util.zip.ZipFile$InflaterCleanupAction
+          64    0.15%        2  java.util.ArrayDeque$DeqIterator
+          64    0.15%        1  java.util.zip.Inflater
+          64    0.15%        2  java.nio.charset.CoderResult[]
+          64    0.15%        2  java.lang.ThreadLocal$ThreadLocalMap$Entry
+          64    0.15%        1  java.lang.Class$ReflectionData
+          64    0.15%        2  sun.nio.fs.UnixPath
+          64    0.15%        2  java.lang.ref.ReferenceQueue
+          56    0.13%        1  java.io.FileCleanable
+          56    0.13%        1  java.lang.Runnable[]
+          56    0.13%        1  java.util.LinkedHashMap
+          56    0.13%        1  java.nio.HeapCharBuffer
+          56    0.13%        1  java.nio.file.StandardOpenOption[]
+          56    0.13%        1  java.nio.HeapByteBuffer
+          56    0.13%        1  java.util.jar.JarFile
+          48    0.11%        1  java.lang.ThreadGroup
+          48    0.11%        2  java.security.ProtectionDomain[]
+          48    0.11%        2  java.util.ImmutableCollections$List12
+          48    0.11%        1  jdk.internal.loader.URLClassPath$JarLoader
+          48    0.11%        1  java.util.concurrent.TimeUnit[]
+          48    0.11%        2  java.util.ArrayList
+          48    0.11%        2  java.util.Collections$SetFromMap
+          48    0.11%        3  java.util.Optional
+          48    0.11%        2  java.lang.Class[]
+          48    0.11%        1  java.util.WeakHashMap
+          40    0.10%        1  java.lang.Package$VersionInfo
+          40    0.10%        1  java.util.IdentityHashMap$KeyIterator
+          40    0.10%        1  java.util.IdentityHashMap
+          40    0.10%        1  java.util.zip.ZipFile$Source$End
+          40    0.10%        1  jdk.internal.loader.URLClassPath$JarLoader$2
+          40    0.10%        1  jdk.internal.ref.CleanerImpl$CleanerCleanable
+          40    0.10%        1  java.security.CodeSource
+          40    0.10%        1  java.io.FileDescriptor
+          32    0.08%        1  java.util.zip.ZipFile$CleanableResource
+          32    0.08%        1  sun.nio.fs.NativeBuffer
+          32    0.08%        1  java.lang.Package
+          32    0.08%        1  java.lang.Integer[]
+          32    0.08%        1  java.util.concurrent.ConcurrentHashMap$ReservationNode
+          32    0.08%        1  java.io.RandomAccessFile
+          32    0.08%        1  java.util.zip.ZipCoder$UTF8ZipCoder
+          32    0.08%        1  sun.nio.fs.NativeBuffer[]
+          32    0.08%        2  java.lang.Shutdown$Lock
+          32    0.08%        1  java.util.jar.Manifest$FastInputStream
+          32    0.08%        1  java.lang.Thread[]
+          32    0.08%        1  java.lang.invoke.MethodHandles$Lookup
+          32    0.08%        1  sun.nio.fs.LinuxFileSystem
+          32    0.08%        2  jdk.internal.reflect.ReflectionFactory$GetReflectionFactoryAction
+          32    0.08%        2  java.security.ProtectionDomain$Key
+          32    0.08%        2  java.security.Principal[]
+          32    0.08%        2  java.lang.ref.ReferenceQueue$Lock
+          32    0.08%        1  java.nio.file.attribute.FileTime
+          24    0.06%        1  sun.nio.fs.NativeBuffer$Deallocator
+          24    0.06%        1  java.util.zip.Inflater$InflaterZStreamRef
+          24    0.06%        1  sun.security.util.LazyCodeSourcePermissionCollection
+          24    0.06%        1  java.util.zip.ZipFile$Source$Key
+          24    0.06%        1  sun.nio.fs.UnixFileAttributeViews$Basic
+          24    0.06%        1  jdk.internal.loader.FileURLMapper
+          24    0.06%        1  jdk.internal.loader.URLClassPath$3
+          24    0.06%        1  jdk.internal.ref.CleanerImpl
+          24    0.06%        1  java.util.jar.Manifest
+          24    0.06%        1  java.io.ByteArrayOutputStream
+          24    0.06%        1  java.lang.PublicMethods$MethodList
+          24    0.06%        1  java.lang.RuntimePermission
+          24    0.06%        1  java.lang.ThreadLocal$ThreadLocalMap
+          24    0.06%        1  java.lang.reflect.Method[]
+          24    0.06%        1  java.security.BasicPermissionCollection
+          24    0.06%        1  java.security.Permissions
+          24    0.06%        1  java.security.SecureClassLoader$1
+          24    0.06%        1  java.util.ArrayDeque
+          24    0.06%        1  java.util.ImmutableCollections$Set12
+          24    0.06%        1  java.util.ImmutableCollections$SetN
+          24    0.06%        1  java.util.ImmutableCollections$ListN
+          16    0.04%        1  java.nio.Bits$1
+          16    0.04%        1  java.util.zip.CRC32
+          16    0.04%        1  java.io.RandomAccessFile$2
+          16    0.04%        1  sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes
+          16    0.04%        1  java.lang.Integer
+          16    0.04%        1  java.util.zip.ZipFile$1
+          16    0.04%        1  sun.nio.fs.NativeBuffers$1
+          16    0.04%        1  java.util.jar.JavaUtilJarAccessImpl
+          16    0.04%        1  java.lang.ThreadLocal
+          16    0.04%        1  java.util.jar.Attributes
+          16    0.04%        1  sun.nio.fs.LinuxFileSystemProvider
+          16    0.04%        1  java.lang.ref.Cleaner
+          16    0.04%        1  java.lang.ref.Cleaner$1
+          16    0.04%        1  java.util.concurrent.atomic.AtomicInteger
+          16    0.04%        1  java.nio.file.LinkOption[]
+          16    0.04%        1  jdk.internal.ref.CleanerFactory$1
+          16    0.04%        1  java.util.concurrent.ConcurrentHashMap$ValuesView
+          16    0.04%        1  jdk.internal.perf.Perf$GetPerfAction
+          16    0.04%        1  jdk.internal.perf.Perf
+          16    0.04%        1  jdk.internal.misc.TerminatingThreadLocal$1
+          16    0.04%        1  java.util.WeakHashMap$KeySet
+          16    0.04%        1  jdk.internal.loader.URLClassPath$JarLoader$1
+          16    0.04%        1  java.security.SecureClassLoader$CodeSourceKey
+          16    0.04%        1  java.util.HashSet
+          16    0.04%        1  java.util.IdentityHashMap$KeySet

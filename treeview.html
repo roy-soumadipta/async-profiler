@@ -1,0 +1,3856 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tree view</title>
+    <meta charset="utf-8" />
+    <style>
+      html,
+      body,
+      div,
+      span,
+      a,
+      code,
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      body {
+        line-height: 140%;
+        font-family: Arial;
+        background: white;
+        font-size: 15px;
+      }
+      ul {
+        list-style: none;
+      }
+
+      .tree li {
+        list-style-type: none;
+        position: relative;
+        white-space: nowrap;
+      }
+      .tree ul {
+        margin-left: 20px;
+        padding-left: 0;
+      }
+      .tree li ul {
+        display: none;
+      }
+      .tree li.open > ul {
+        display: block;
+      }
+      .tree li div:before,
+      .tree li div:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: #252527;
+      }
+      .tree li div:before {
+        width: 10px;
+        height: 2px;
+        left: -1px;
+      }
+      .tree li div:after {
+        width: 2px;
+        height: 10px;
+        left: 3px;
+      }
+      .tree li div:hover:after,
+      .tree li div:hover:before {
+        background: #00ac4f;
+      }
+      .tree li.open > div:after {
+        display: none;
+      }
+      .tree li > div {
+        padding-left: 17px;
+        position: relative;
+        display: inline;
+        cursor: pointer;
+        color: black;
+        text-decoration: none;
+      }
+      .tree li > div:first-word {
+        font-weight: bold;
+      }
+      /* no children ul */
+      .o:after,
+      .o:before {
+        display: none !important;
+      }
+      .sc {
+        text-decoration-color: black;
+        font-weight: bold;
+        background-color: #d9d9d9;
+      }
+      input {
+        height: 36px;
+        padding: 0 14px;
+        border-radius: 4px;
+        background: white;
+        font-size: 16px;
+        border: 1px solid #2023281a;
+      }
+      button {
+        height: 36px;
+        border: none;
+        background: none;
+        border-radius: 4px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      button:hover {
+        color: #00ac4f;
+      }
+      .button_outlined {
+        color: black;
+        font-size: 15px;
+        padding: 0 12px;
+        background: white;
+        border: 1px solid #2023281a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .total-count {
+        color: #5e5e5e;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .p {
+        font-weight: bold;
+      }
+      .header {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        gap: 16px;
+        flex-direction: row;
+        z-index: 100;
+        padding: 8px 20px;
+        background: #f5f5f5;
+        align-items: center;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .icon_gray {
+        color: #b7b7b7;
+      }
+      .header-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+      }
+      .header-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+      }
+      .view-type {
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        font-weight: bold;
+        margin-top: 4px;
+        align-items: center;
+      }
+      .view-type__decoration {
+        display: flex;
+        gap: 8px;
+      }
+      .header-item_search {
+        gap: 8px;
+        flex: 1;
+      }
+      .search-input {
+        flex: 1;
+      }
+      .title {
+        font-size: 16px;
+      }
+      .wrapper {
+        padding: 70px 20px 10px;
+        background: white;
+        border-top: 1px solid #e9e9e9;
+      }
+
+      .child-count {
+        border: 1px solid #abb1c1;
+        border-radius: 3px;
+        padding: 0 5px;
+        color: #7d8089;
+      }
+
+      .t0,
+      .t1,
+      .t2,
+      .t3,
+      .t4,
+      .t5,
+      .t6 {
+        font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+      }
+      .t0 {color: #3A6F38;}
+      .t1 {color: #05B505;}
+      .t2 {color: #006A7C;}
+      .t3 {color: #9B0000;}
+      .t4 {color: #A7A718;}
+      .t5 {color: #CC5200;}
+      .t6 {color: #7C8F45;}
+      @media only screen and (max-width: 968px) {
+        .only-desktop {
+          display: none;
+        }
+      }
+    </style>
+<script>
+function treeView(opt) {
+	var tree = document.querySelectorAll('ul.tree div:not(:last-child)');
+	for(var i = 0; i < tree.length; i++){
+		var parent = tree[i].parentElement;
+		var classList = parent.classList;
+		if(opt == 0) {
+			classList.add('open');
+		} else {
+			classList.remove('open');
+		}
+	}
+}
+function openParent(p,t) {
+	if(p.parentElement.classList.contains('tree')) {
+		return;
+	}
+	p.parentElement.classList.add('open');
+	openParent(p.parentElement,t);
+}
+function search() {
+	var tree = document.querySelectorAll('ul.tree span');
+	var check = document.getElementById('check');
+	for(var i = 0; i < tree.length; i++){
+		tree[i].classList.remove('sc');
+		if(tree[i].innerHTML.includes(document.getElementById('search').value)) {
+			tree[i].classList.add('sc');
+			openParent(tree[i].parentElement,tree);
+		}
+	}
+}
+function openUL(n) {
+	var children = n.children;
+	if(children.length == 1) {
+		openNode(children[0]);
+	}
+}
+function openNode(n) {
+	var children = n.children;
+	for(var i = 0; i < children.length; i++){
+		if(children[i].nodeName == 'UL') {
+			n.classList.add('open');
+			openUL(children[i]);
+		}
+	}
+}
+function addClickActions() {
+var tree = document.querySelectorAll('ul.tree div:not(:last-child)');
+for(var i = 0; i < tree.length; i++){
+	tree[i].addEventListener('click', function(e) {
+		var parent = e.target.parentElement;
+		var classList = parent.classList;
+		if(classList.contains('open')) {
+			classList.remove('open');
+			var opensubs = parent.querySelectorAll(':scope .open');
+			for(var i = 0; i < opensubs.length; i++){
+				opensubs[i].classList.remove('open');
+			}
+		} else {
+			if(e.altKey) {
+				classList.add('open');
+				var opensubs = parent.querySelectorAll('li');
+				for(var i = 0; i < opensubs.length; i++){
+					opensubs[i].classList.add('open');
+				}
+			} else {
+				openNode(parent);
+			}
+		}
+	});
+}
+}
+</script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="title">
+        <div class="view-type">
+          <span class="view-type__decoration only-desktop">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 17H5C3.89543 17 3 16.1046 3 15V3" stroke="#A2A2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 7H3" stroke="#A2A2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M21 8.5V5C21 4.17157 20.3284 3.5 19.5 3.5H17.4381C17.1071 3.5 16.7975 3.33616 16.6113 3.06243L16.1863 2.43757C16.0001 2.16383 15.6905 1.99999 15.3594 2H13.5C12.6716 2 12 2.67157 12 3.5V8.5C12 9.32843 12.6716 10 13.5 10H19.5C20.3284 10 21 9.32843 21 8.5Z" stroke="#A2A2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M21 19.5V16C21 15.1716 20.3284 14.5 19.5 14.5H17.4381C17.1071 14.5 16.7975 14.3362 16.6113 14.0624L16.1863 13.4376C16.0001 13.1638 15.6905 13 15.3594 13H13.5C12.6716 13 12 13.6716 12 14.5V19.5C12 20.3284 12.6716 21 13.5 21H19.5C20.3284 21 21 20.3284 21 19.5Z" stroke="#A2A2A2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Call tree view</span>
+          </span>
+          <span class="total-count">total samples: 733</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="header-item">
+          <button alt="Collapse All" type="button" onclick="treeView(0)" class="button_outlined">Expand All</button>
+          <button alt="Expand All" type="button" onclick="treeView(1)" class="button_outlined">Collapse All</button>
+        </div>
+        <div class="header-item header-item_search">
+          <input class="search-input" type="text" id="search" value="" placeholder="Search..." size="35" onkeypress="if(event.keyCode == 13) search()"/>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper">
+      <ul class="tree">
+        <li><div>92.22% [676] &#8226; self: 0.00% [0]</div> <span class="t1">sun/launcher/LauncherHelper.checkAndLoadMain</span>
+<ul>
+<li><div>88.54% [649] &#8226; self: 0.00% [0]</div> <span class="t1">sun/launcher/LauncherHelper.loadMainClass</span>
+<ul>
+<li><div>88.54% [649] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.forName</span>
+<ul>
+<li><div>88.54% [649] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.forName0</span>
+<ul>
+<li><div>87.99% [645] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.loadClass</span>
+<ul>
+<li><div>87.99% [645] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaders$AppClassLoader.loadClass</span>
+<ul>
+<li><div>87.99% [645] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClass</span>
+<ul>
+<li><div>87.99% [645] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClassOrNull</span>
+<ul>
+<li><div>86.77% [636] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.findClassOnClassPathOrNull</span>
+<ul>
+<li><div>66.58% [488] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath.getResource</span>
+<ul>
+<li><div>64.80% [475] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath.getLoader</span>
+<ul>
+<li><div>56.48% [414] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath.getLoader</span>
+<ul>
+<li><div>56.07% [411] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.doPrivileged</span>
+<ul>
+<li><div>56.07% [411] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.executePrivileged</span>
+<ul>
+<li><div>56.07% [411] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$3.run</span>
+<ul>
+<li><div>56.07% [411] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$3.run</span>
+<ul>
+<li><div>54.30% [398] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader.&lt;init&gt;</span>
+<ul>
+<li><div>52.39% [384] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader.ensureOpen</span>
+<ul>
+<li><div>52.11% [382] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.doPrivileged</span>
+<ul>
+<li><div>52.11% [382] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.executePrivileged</span>
+<ul>
+<li><div>52.11% [382] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader$1.run</span>
+<ul>
+<li><div>52.11% [382] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader$1.run</span>
+<ul>
+<li><div>42.70% [313] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader.getJarFile</span>
+<ul>
+<li><div>38.47% [282] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.&lt;init&gt;</span>
+<ul>
+<li><div>38.47% [282] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.&lt;init&gt;</span>
+<ul>
+<li><div>38.47% [282] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.&lt;init&gt;</span>
+<ul>
+<li><div>32.61% [239] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$CleanableResource.&lt;init&gt;</span>
+<ul>
+<li><div>13.78% [101] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.get</span>
+<ul>
+<li><div>7.50% [55] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/file/Files.readAttributes</span>
+<ul>
+<li><div>7.50% [55] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/LinuxFileSystemProvider.readAttributes</span>
+<ul>
+<li><div>7.37% [54] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileSystemProvider.readAttributes</span>
+<ul>
+<li><div>4.23% [31] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributeViews$Basic.readAttributes</span>
+<ul>
+<li><div>3.96% [29] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributes.get</span>
+<ul>
+<li><div>3.82% [28] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixNativeDispatcher.stat</span>
+<ul>
+<li><div>3.27% [24] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixNativeDispatcher.copyToNativeBuffer</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/NativeBuffers.getNativeBufferFromCache</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal.get</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal.setInitialValue</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/TerminatingThreadLocal.register</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal.get</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal.setInitialValue</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/TerminatingThreadLocal$1.initialValue</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/TerminatingThreadLocal$1.initialValue</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections.newSetFromMap</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections$SetFromMap.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/IdentityHashMap.keySet</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.IdentityHashMap$KeySet</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.Collections$SetFromMap</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.IdentityHashMap</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/IdentityHashMap.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/IdentityHashMap.init</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/IdentityHashMap.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal$ThreadLocalMap.set</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ThreadLocal$ThreadLocalMap$Entry</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal.createMap</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadLocal$ThreadLocalMap.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ThreadLocal$ThreadLocalMap$Entry</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ThreadLocal$ThreadLocalMap$Entry[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ThreadLocal$ThreadLocalMap</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/NativeBuffers.allocNativeBuffer</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/NativeBuffer.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.NativeBuffer$Deallocator</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.NativeBuffer</span>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/NativeBuffers.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/TerminatingThreadLocal.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.misc.TerminatingThreadLocal$1</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.NativeBuffers$1</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixNativeDispatcher.stat0</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/NativeBuffer.release</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/NativeBuffers.releaseNativeBuffer</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.NativeBuffer[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.UnixFileAttributes</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributes.asBasicFileAttributes</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributes$UnixAsBasicFileAttributes.wrap</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.UnixFileAttributes$UnixAsBasicFileAttributes</span>
+</ul>
+</ul>
+</ul>
+<li><div>2.73% [20] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/LinuxFileSystemProvider.getFileAttributeView</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileSystemProvider.getFileAttributeView</span>
+<ul>
+<li><div>2.32% [17] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributeViews.createBasicView</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/AbstractBasicFileAttributeView.&lt;clinit&gt;</span>
+<ul>
+<li><div>1.64% [12] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/Util.newSet</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashSet.add</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.newNode</span>
+<ul>
+<li><div class="o">1.23% [9] &#8226; self: 1.23% [9]</div> <span class="t2">java.util.HashMap$Node</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.resize</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashSet</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashSet.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String[]</span>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.UnixFileAttributeViews$Basic</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+<li><div>3.14% [23] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.&lt;init&gt;</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.initCEN</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.findEND</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipUtils.&lt;clinit&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/ByteBuffer.allocate</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/HeapByteBuffer.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.nio.HeapByteBuffer</span>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$Source$End</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/RandomAccessFile.&lt;init&gt;</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/RandomAccessFile.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/FileCleanable.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.FileCleanable</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.FileDescriptor</span>
+</ul>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/RandomAccessFile.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.RandomAccessFile$2</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.RandomAccessFile</span>
+</ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.hash</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source$Key.hashCode</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributes$UnixAsBasicFileAttributes.lastModifiedTime</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributes.lastModifiedTime</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileAttributes.toFileTime</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/TimeUnit.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.95% [7] &#8226; self: 0.95% [7]</div> <span class="t2">java.util.concurrent.TimeUnit</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/TimeUnit.$values</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.TimeUnit[]</span>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/file/attribute/FileTime.from</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.nio.file.attribute.FileTime</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.newNode</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.resize</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.55% [4] &#8226; self: 0.55% [4]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileSystem.getPath</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.UnixPath</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/file/Files.&lt;clinit&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Set.of</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.ImmutableCollections$Set12</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$Source$Key</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$Source</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.nio.file.LinkOption[]</span>
+</ul>
+<li><div>13.23% [97] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.&lt;clinit&gt;</span>
+<ul>
+<li><div>12.82% [94] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/DefaultFileSystemProvider.&lt;clinit&gt;</span>
+<ul>
+<li><div>9.69% [71] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/LinuxFileSystemProvider.&lt;init&gt;</span>
+<ul>
+<li><div>9.69% [71] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileSystemProvider.&lt;init&gt;</span>
+<ul>
+<li><div>9.69% [71] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/LinuxFileSystemProvider.newFileSystem</span>
+<ul>
+<li><div>9.69% [71] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/LinuxFileSystemProvider.newFileSystem</span>
+<ul>
+<li><div>9.14% [67] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/LinuxFileSystem.&lt;init&gt;</span>
+<ul>
+<li><div>9.14% [67] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileSystem.&lt;init&gt;</span>
+<ul>
+<li><div>7.64% [56] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixNativeDispatcher.&lt;clinit&gt;</span>
+<ul>
+<li><div>5.59% [41] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BootLoader.loadLibrary</span>
+<ul>
+<li><div>5.59% [41] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>5.59% [41] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>3.27% [24] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.findFromPaths</span>
+<ul>
+<li><div>2.05% [15] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashSet.add</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.newNode</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.resize</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.put</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayDeque.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.ArrayDeque$DeqIterator</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.NativeLibraries$NativeLibraryImpl</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.doPrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.executePrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$1.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$1.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.getCanonicalPath</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.canonicalize</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.canonicalize0</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_io_UnixFileSystem_canonicalize0</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JNU_NewStringPlatform</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">newSizedString8859_1</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_oop_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.NativeLibraries$1</span>
+</ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.&lt;init&gt;</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.resolve</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System.mapLibraryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_lang_System_mapLibraryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_oop_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.File</span>
+</ul>
+<li><div>2.18% [16] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$LibraryPaths.&lt;clinit&gt;</span>
+<ul>
+<li><div>2.18% [16] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaderHelper.parsePath</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.68% [5] &#8226; self: 0.68% [5]</div> <span class="t2">java.lang.String</span>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.68% [5] &#8226; self: 0.68% [5]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.util.ArrayList</span>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.String[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.add</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.add</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.grow</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.grow</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>2.05% [15] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixNativeDispatcher.init</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.55% [4] &#8226; self: 0.55% [4]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.values</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValuesView</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t3">Java_sun_nio_fs_UnixNativeDispatcher_init</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t3">jni_FindClass</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">find_class_from_class_loader</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_or_fail</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::check_shared_class_super_types</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_super_or_fail</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::check_shared_class_super_types</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_super_or_fail</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+</ul>
+<li><div class="o">0.68% [5] &#8226; self: 0.68% [5]</div> <span class="t2">int[]</span>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixNativeDispatcher.getcwd</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">Java_sun_nio_fs_UnixNativeDispatcher_getcwd</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewByteArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.UnixPath</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/Util.toBytes</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.getBytes</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.encode</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.encodeUTF8</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.LinuxFileSystem</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>2.32% [17] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/file/spi/FileSystemProvider.&lt;clinit&gt;</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/file/StandardOpenOption.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">1.36% [10] &#8226; self: 1.36% [10]</div> <span class="t2">java.nio.file.StandardOpenOption</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/file/StandardOpenOption.$values</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.nio.file.StandardOpenOption[]</span>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Set.of</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ImmutableCollections$SetN.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.ImmutableCollections$SetN</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+</ul>
+<li><div class="o">0.55% [4] &#8226; self: 0.55% [4]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/fs/UnixFileSystemProvider.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.nio.fs.LinuxFileSystemProvider</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap</span>
+</ul>
+<li><div>4.09% [30] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/ref/CleanerFactory.&lt;clinit&gt;</span>
+<ul>
+<li><div>3.14% [23] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.create</span>
+<ul>
+<li><div>2.05% [15] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/ref/CleanerImpl.start</span>
+<ul>
+<li><div>1.64% [12] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/ref/CleanerFactory$1.newThread</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/InnocuousThread.&lt;clinit&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/ProtectionDomain.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.ProtectionDomain$Key</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.Principal[]</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessControlContext.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Object.clone</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_Clone</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.ProtectionDomain[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.ProtectionDomain[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.ProtectionDomain</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.AccessControlContext</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ThreadGroup</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.atomic.AtomicInteger</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/InnocuousThread.newSystemThread</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/InnocuousThread.createThread</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/InnocuousThread.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.getContext</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.AccessControlContext</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.misc.InnocuousThread</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.start</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ThreadGroup.add</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Thread[]</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$CleanerCleanable</span>
+</ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.&lt;init&gt;</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/ref/CleanerImpl.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/ReferenceQueue.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.ReferenceQueue$Lock</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.ReferenceQueue</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.Cleaner</span>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.Cleaner$1</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerFactory$1</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.&lt;init&gt;</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/ReferenceQueue.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.ReferenceQueue$Lock</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.newTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.WeakHashMap$Entry[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.ReferenceQueue</span>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections.newSetFromMap</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.Collections$SetFromMap</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections$SetFromMap.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.keySet</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.WeakHashMap$KeySet</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayDeque.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.ArrayDeque</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.WeakHashMap</span>
+</ul>
+<li><div>4.37% [32] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/PerfCounter.getZipFileOpenTime</span>
+<ul>
+<li><div>4.23% [31] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/PerfCounter$CoreCounters.&lt;clinit&gt;</span>
+<ul>
+<li><div>4.23% [31] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/PerfCounter.newPerfCounter</span>
+<ul>
+<li><div>3.41% [25] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/PerfCounter.&lt;init&gt;</span>
+<ul>
+<li><div>2.32% [17] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/Perf.createLong</span>
+<ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t3">Perf_CreateLong</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t4">JNIEnv_::NewObject</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewObjectV</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.82% [6] &#8226; self: 0.82% [6]</div> <span class="t2">java.nio.DirectByteBuffer</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewDirectByteBuffer</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">initializeDirectBufferSupport</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t3">lookupDirectBufferClasses</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">lookupOne</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">find_class_from_class_loader</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_or_fail</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::check_shared_class_super_types</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_super_or_fail</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/DirectByteBuffer.&lt;clinit&gt;</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/Bits.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">java.util.concurrent.atomic.AtomicLong</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.nio.Bits$1</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/DirectByteBuffer.asLongBuffer</span>
+<ul>
+<li><div class="o">0.82% [6] &#8226; self: 0.82% [6]</div> <span class="t2">java.nio.DirectLongBufferU</span>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+<li><div class="o">0.82% [6] &#8226; self: 0.82% [6]</div> <span class="t2">jdk.internal.perf.PerfCounter</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/PerfCounter.&lt;clinit&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.doPrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.executePrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/Perf$GetPerfAction.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/Perf$GetPerfAction.run</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/perf/Perf.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.perf.Perf</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.perf.Perf$GetPerfAction</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipCoder.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipCoder$UTF8ZipCoder</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.File</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$CleanableResource</span>
+</ul>
+</ul>
+</ul>
+<li><div>3.41% [25] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.82% [6] &#8226; self: 0.82% [6]</div> <span class="t2">byte[]</span>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Runtime.version</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/VersionProps.versionNumbers</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/VersionProps.parseVersionNumbers</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/List.of</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ImmutableCollections.listFromArray</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.ImmutableCollections$ListN</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Integer[]</span>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/VersionProps.optional</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/VersionProps.optionalOf</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Optional.of</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.Optional</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Runtime$Version</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/VersionProps.build</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Optional.of</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.Optional</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Runtime$Version.parse</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/List.of</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.util.ImmutableCollections$List12</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.Runtime$Version</span>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Integer.toString</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.JavaUtilJarAccessImpl</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ThreadLocal</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.File</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.JarFile</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/FileURLMapper.exists</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.File</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.FileURLMapper</span>
+</ul>
+<li><div>9.28% [68] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/util/jar/JarIndex.getJarIndex</span>
+<ul>
+<li><div>9.28% [68] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getJarEntry</span>
+<ul>
+<li><div>9.28% [68] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getEntry</span>
+<ul>
+<li><div>9.28% [68] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.isMultiRelease</span>
+<ul>
+<li><div>9.28% [68] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.checkForSpecialAttributes</span>
+<ul>
+<li><div>8.19% [60] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getBytes</span>
+<ul>
+<li><div>5.59% [41] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getInputStream</span>
+<ul>
+<li><div>4.77% [35] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>3.96% [29] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$CleanableResource.getInflater</span>
+<ul>
+<li><div>2.86% [21] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.&lt;clinit&gt;</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipUtils.loadLibrary</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BootLoader.loadLibrary</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.findFromPaths</span>
+<ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashSet.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.newNode</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.NativeLibraries$NativeLibraryImpl</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.put</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayDeque.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.ArrayDeque$DeqIterator</span>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.doPrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.executePrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$1.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$1.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.getCanonicalPath</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.canonicalize</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.canonicalize0</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_io_UnixFileSystem_canonicalize0</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JNU_NewStringPlatform</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">newSizedString8859_1</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_oop_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.NativeLibraries$1</span>
+</ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.&lt;init&gt;</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.resolve</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System.mapLibraryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_lang_System_mapLibraryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_oop_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.File</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.initIDs</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.&lt;init&gt;</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.init</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater$InflaterZStreamRef.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.Inflater$InflaterZStreamRef</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.Inflater</span>
+</ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/InflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$InflaterCleanupAction</span>
+</ul>
+</ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$ZipFileInputStream</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections$SetFromMap.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.put</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.WeakHashMap$Entry</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$ZipFileInflaterInputStream</span>
+</ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">sun/security/util/SignatureFileVerifier.&lt;clinit&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">sun/security/util/SignatureFileVerifier.initializeMaxSigFileSize</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">sun/security/action/GetIntegerAction.privilegedGetProperty</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Integer.valueOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Integer</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.toUpperCase</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.toUpperCase</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/InputStream.readNBytes</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/InflaterInputStream.read</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.inflate</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.inflateBytesBytes</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.fill</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInputStream.read</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInputStream.initDataOffset</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.close</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/ref/PhantomCleanable.clean</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/ref/CleanerImpl$PhantomCleanableRef.performCleanup</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$InflaterCleanupAction.run</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$CleanableResource.releaseInflater</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.reset</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Inflater.reset</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.findNative</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.find</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap$ValuesView.iterator</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ValueIterator</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getManEntry</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getEntry</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getZipEntry</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JavaUtilJarAccessImpl.entryFor</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.entryFor</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.JarFile$JarFileEntry</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.getEntryPos</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipCoder$UTF8ZipCoder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System$2.newStringUTF8NoRepl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.newStringUTF8NoRepl</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$1.getManifestName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getManifestName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getEntryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipCoder$UTF8ZipCoder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System$2.newStringUTF8NoRepl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.newStringUTF8NoRepl</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.URLClassPath$JarLoader$1</span>
+</ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.valueOf</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.toString</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.toExternalForm</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URLStreamHandler.toExternalForm</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.isBuiltinStreamHandler</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.initClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_InitClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::name</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::do_intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.net.URL</span>
+</ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader.&lt;clinit&gt;</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/access/SharedSecrets.getJavaUtilZipFileAccess</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/access/SharedSecrets.ensureClassInitialized</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/invoke/MethodHandles$Lookup.ensureInitialized</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">sun/invoke/util/VerifyAccess.isClassAccessible</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">sun/invoke/util/VerifyAccess.isSamePackage</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getPackageName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.initClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_InitClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::name</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::do_intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.ensureClassInitialized</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.ensureClassInitialized0</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$1</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/invoke/MethodHandles.lookup</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.invoke.MethodHandles$Lookup</span>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.URLClassPath$JarLoader</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.URLClassPath$3</span>
+</ul>
+<li><div>7.78% [57] &#8226; self: 0.00% [0]</div> <span class="t1">sun/net/util/URLUtil.urlNoFragString</span>
+<ul>
+<li><div>7.09% [52] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.toLowerCase</span>
+<ul>
+<li><div>6.96% [51] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Locale.&lt;clinit&gt;</span>
+<ul>
+<li><div>5.46% [40] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Locale.createConstant</span>
+<ul>
+<li><div>2.86% [21] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>2.86% [21] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>2.59% [19] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.newNode</span>
+<ul>
+<li><div class="o">2.59% [19] &#8226; self: 2.59% [19]</div> <span class="t2">java.util.HashMap$Node</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.resize</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.util.HashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">2.59% [19] &#8226; self: 2.59% [19]</div> <span class="t2">java.util.Locale</span>
+</ul>
+<li><div class="o">0.82% [6] &#8226; self: 0.82% [6]</div> <span class="t2">java.io.ObjectStreamField</span>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Locale.initDefault</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Locale.getDefaultExtensions</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Optional.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.Optional</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.ObjectStreamField[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.newNode</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.resize</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.grow</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.grow</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader.getResource</span>
+<ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader.checkResource</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.&lt;init&gt;</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.&lt;init&gt;</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">sun/net/www/protocol/jar/Handler.parseURL</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">sun/net/www/protocol/jar/Handler.parseContextSpec</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.URLClassPath$JarLoader$2</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.net.URL</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getJarEntry</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getEntry</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getEntry</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.getEntryPos</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipCoder$UTF8ZipCoder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System$2.newStringUTF8NoRepl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.newStringUTF8NoRepl</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getZipEntry</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JavaUtilJarAccessImpl.entryFor</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.entryFor</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.JarFile$JarFileEntry</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>19.65% [144] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.defineClass</span>
+<ul>
+<li><div>8.05% [59] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/SecureClassLoader.defineClass</span>
+<ul>
+<li><div>4.77% [35] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/SecureClassLoader.getProtectionDomain</span>
+<ul>
+<li><div>4.23% [31] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.computeIfAbsent</span>
+<ul>
+<li><div>3.82% [28] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/SecureClassLoader$1.apply</span>
+<ul>
+<li><div>3.82% [28] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/SecureClassLoader$1.apply</span>
+<ul>
+<li><div>3.27% [24] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaders$AppClassLoader.getPermissions</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">sun/security/util/LazyCodeSourcePermissionCollection.add</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/Permissions.add</span>
+<ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/Permissions.getPermissionCollection</span>
+<ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/Permissions.createPermissionCollection</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/BasicPermission.newPermissionCollection</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/BasicPermissionCollection.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">java.io.ObjectStreamField</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.ObjectStreamField[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.BasicPermissionCollection</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/BasicPermissionCollection.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap</span>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/BasicPermissionCollection.add</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.put</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.getPermissions</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/SecureClassLoader.getPermissions</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/Permissions.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.io.ObjectStreamField</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.ObjectStreamField[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.Permissions</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/Permissions.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap</span>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">sun.security.util.LazyCodeSourcePermissionCollection</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.RuntimePermission</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/ProtectionDomain.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.ProtectionDomain$Key</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.Principal[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.ProtectionDomain</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$ReservationNode</span>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.SecureClassLoader$CodeSourceKey</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.SecureClassLoader$1</span>
+</ul>
+<li><div>3.27% [24] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.defineClass</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.defineClass1</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_lang_ClassLoader_defineClass1</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_DefineClassWithSource</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t4">jvm_define_class_common</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_class_from_stream</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t4">KlassFactory::create_from_stream</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">ClassFileParser::post_process_parsed_stream</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_super_or_fail</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::char_converter</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_symbol</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">ClassFileParser::create_instance_klass</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">ClassFileParser::fill_instance_klass</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::create_mirror</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceMirrorKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Class</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::initialize_mirror_fields</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.loadClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaders$AppClassLoader.loadClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClassOrNull</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.getClassLoadingLock</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.findLoadedModule</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.addClass</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.grow</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/ArrayList.grow</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.defineClassSourceLocation</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.toString</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URL.toExternalForm</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/net/URLStreamHandler.toExternalForm</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.preDefineClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.checkCerts</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.postDefineClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getPackageName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.initClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_InitClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::name</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::do_intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>4.91% [36] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader$2.getManifest</span>
+<ul>
+<li><div>4.91% [36] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getManifest</span>
+<ul>
+<li><div>4.91% [36] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getManifestFromReference</span>
+<ul>
+<li><div>3.27% [24] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest.&lt;init&gt;</span>
+<ul>
+<li><div>3.27% [24] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest.&lt;init&gt;</span>
+<ul>
+<li><div>2.59% [19] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest.read</span>
+<ul>
+<li><div>2.05% [15] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Attributes.read</span>
+<ul>
+<li><div class="o">0.55% [4] &#8226; self: 0.55% [4]</div> <span class="t2">java.lang.String</span>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.&lt;init&gt;</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.55% [4] &#8226; self: 0.55% [4]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Attributes.putValue</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Attributes.put</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.put</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.putVal</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/LinkedHashMap.newNode</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.util.LinkedHashMap$Entry</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/HashMap.resize</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/ByteArrayOutputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/ByteArrayOutputStream.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.ByteArrayOutputStream</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest$FastInputStream.readLine</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest$FastInputStream.readLine</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest$FastInputStream.fill</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/InflaterInputStream.read</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.fill</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInputStream.read</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInputStream.initDataOffset</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest$FastInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Manifest$FastInputStream.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.Manifest$FastInputStream</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Attributes.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/Attributes.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.LinkedHashMap</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.Attributes</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.HashMap</span>
+</ul>
+</ul>
+<li><div>1.36% [10] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getInputStream</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/InflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$InflaterCleanupAction</span>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$Source.getEntryPos</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipCoder$UTF8ZipCoder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System$2.newStringUTF8NoRepl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.newStringUTF8NoRepl</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$ZipFileInputStream</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections$SetFromMap.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.put</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.WeakHashMap$Entry</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$ZipFileInflaterInputStream</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.SoftReference</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.jar.Manifest</span>
+</ul>
+</ul>
+</ul>
+<li><div>2.86% [21] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader$2.getBytes</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/CRC32.&lt;clinit&gt;</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipUtils.loadLibrary</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BootLoader.loadLibrary</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.findFromPaths</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.&lt;init&gt;</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.resolve</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries.loadLibrary</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.doPrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.executePrivileged</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$1.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/NativeLibraries$1.run</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.getCanonicalPath</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.canonicalize</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/UnixFileSystem.canonicalize0</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_io_UnixFileSystem_canonicalize0</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JNU_NewStringPlatform</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">newSizedString8859_1</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_oop_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/File.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.loader.NativeLibraries$1</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/System.mapLibraryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_lang_System_mapLibraryName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_oop_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.io.File</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/Resource.getBytes</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/InflaterInputStream.read</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.fill</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInputStream.read</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInputStream.initDataOffset</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.CRC32</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/Checksum.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaders$AppClassLoader.defineOrCheckPackage</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.defineOrCheckPackage</span>
+<ul>
+<li><div>1.50% [11] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.definePackage</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.definePackage</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Package.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Package$VersionInfo.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Package$VersionInfo</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Package</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.concat</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.simpleConcat</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.newArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray0</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.replace</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.replace</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.newArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray0</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>1.23% [9] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/Resource.getByteBuffer</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/Resource.cachedInputStream</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/URLClassPath$JarLoader$2.getInputStream</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/jar/JarFile.getInputStream</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile.getInputStream</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/ZipFile$ZipFileInflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/zip/InflaterInputStream.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.41% [3] &#8226; self: 0.41% [3]</div> <span class="t2">byte[]</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ref/Cleaner.register</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.ref.CleanerImpl$PhantomCleanableRef</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$InflaterCleanupAction</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$ZipFileInputStream</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections$SetFromMap.add</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/WeakHashMap.put</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.WeakHashMap$Entry</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.zip.ZipFile$ZipFileInflaterInputStream</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/CodeSource.&lt;init&gt;</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">sun/net/util/URLUtil.urlNoFragString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.toString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.append</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.ensureCapacityInternal</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOf</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.CodeSource</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.concat</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.simpleConcat</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.newArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray0</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.replace</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.replace</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringConcatHelper.newArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/Unsafe.allocateUninitializedArray0</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClassOrNull</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClassOrNull</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.getClassLoadingLock</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.initTable</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node[]</span>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.findLoadedModule</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.getClassLoadingLock</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.findLoadedModule</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t3">Java_java_lang_Class_forName0</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_FindClassFromCaller</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">find_class_from_class_loader</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_or_fail</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::char_converter</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_symbol</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>3.41% [25] &#8226; self: 0.00% [0]</div> <span class="t1">sun/launcher/LauncherHelper.validateMainClass</span>
+<ul>
+<li><div>3.14% [23] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getMethod</span>
+<ul>
+<li><div>2.86% [21] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getMethod0</span>
+<ul>
+<li><div>2.86% [21] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getMethodsRecursive</span>
+<ul>
+<li><div>2.32% [17] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.privateGetDeclaredMethods</span>
+<ul>
+<li><div>1.64% [12] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getDeclaredMethods0</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_GetClassDeclaredMethods</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t4">get_class_declared_methods_helper</span>
+<ul>
+<li><div>0.82% [6] &#8226; self: 0.00% [0]</div> <span class="t4">Reflection::new_method</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t4">get_parameter_types</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SignatureStream::as_java_mirror</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_or_fail</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_array_class_or_null</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::char_converter</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_symbol</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_objArray</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Class[]</span>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_reflect_Method::create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance_handle</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.reflect.Method</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_objArray</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.reflect.Method[]</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::link_class_impl</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Rewriter::rewrite</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Rewriter::Rewriter</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">ConstantPool::initialize_resolved_references</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_objArray</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.loadClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaders$AppClassLoader.loadClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClass</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClassOrNull</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.getClassLoadingLock</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.findLoadedModule</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.reflectionData</span>
+<ul>
+<li><div>0.68% [5] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.newReflectionData</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.ref.SoftReference</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Class$ReflectionData</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class$ReflectionData.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/PublicMethods$MethodList.filter</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.PublicMethods$MethodList</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/PublicMethods$Key.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.reflect.ReflectionFactory$GetReflectionFactoryAction</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/reflect/ReflectionFactory.copyMethod</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/reflect/ReflectAccess.copyMethod</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/reflect/Method.copy</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.reflect.Method</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getReflectionFactory</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">jdk.internal.reflect.ReflectionFactory$GetReflectionFactoryAction</span>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Class[]</span>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">sun/launcher/LauncherHelper.doesExtendFXApplication</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.getName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Class.initClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_InitClassName</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::name</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">StringTable::do_intern</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_unicode</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>4.91% [36] &#8226; self: 0.00% [0]</div> <span class="t1">test/alloc/Hello.main</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/PrintStream.println</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/PrintStream.writeln</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/BufferedWriter.flushBuffer</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">java/io/OutputStreamWriter.write</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/cs/StreamEncoder.write</span>
+<ul>
+<li><div>2.46% [18] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/cs/StreamEncoder.implWrite</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/cs/StreamEncoder.implWrite</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/charset/CharsetEncoder.encode</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/cs/UTF_8$Encoder.encodeLoop</span>
+<ul>
+<li><div>1.91% [14] &#8226; self: 0.00% [0]</div> <span class="t1">sun/nio/cs/UTF_8$Encoder.encodeArrayLoop</span>
+<ul>
+<li><div>1.77% [13] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/charset/CoderResult.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">1.36% [10] &#8226; self: 1.36% [10]</div> <span class="t2">java.nio.charset.CoderResult</span>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.nio.charset.CoderResult[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String[]</span>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/nio/CharBuffer.wrap</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.nio.HeapCharBuffer</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.loadClass</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/ClassLoaders$AppClassLoader.loadClass</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClass</span>
+<ul>
+<li><div>1.09% [8] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.loadClassOrNull</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/ClassLoader.getClassLoadingLock</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.Object</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putIfAbsent</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/concurrent/ConcurrentHashMap.putVal</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.util.concurrent.ConcurrentHashMap$Node</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/loader/BuiltinClassLoader.findLoadedModule</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.substring</span>
+<ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringLatin1.newString</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.String</span>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.68% [5] &#8226; self: 0.68% [5]</div> <span class="t2">byte[]</span>
+<li><div class="o">0.68% [5] &#8226; self: 0.68% [5]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t3">start_thread</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t3">ThreadJavaMain</span>
+<ul>
+<li><div>0.95% [7] &#8226; self: 0.00% [0]</div> <span class="t3">JavaMain</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t3">JNI_CreateJavaVM</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">Threads::create_vm</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">Management::initialize</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t4">NotificationThread::initialize</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::create_from_str</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_String::basic_create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">JavaCalls::construct_new_instance</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance_handle</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Thread</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">NewPlatformString</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewByteArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_FindClassFromBootLoader</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">jni_DestroyJavaVM</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Threads::destroy_vm</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::resolve_instance_class_or_null</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_instance_class_impl</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">SystemDictionary::load_shared_class</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">Klass::restore_unshareable_info</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_lang_Class::restore_archived_mirror</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">TypeArrayKlass::allocate_common</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">NewPlatformStringArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">jni_NewObjectArray</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">ObjArrayKlass::allocate</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.55% [4] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Shutdown.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">java.lang.Shutdown$Lock</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Runnable[]</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">sun/launcher/LauncherHelper.makePlatformString</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/String.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">int[]</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Arrays.copyOfRange</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.String</span>
+</ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.exit</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">jdk/internal/misc/TerminatingThreadLocal.threadTerminated</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/Collections$SetFromMap.iterator</span>
+<ul>
+<li><div>0.41% [3] &#8226; self: 0.00% [0]</div> <span class="t1">java/util/IdentityHashMap$KeySet.iterator</span>
+<ul>
+<li><div class="o">0.27% [2] &#8226; self: 0.27% [2]</div> <span class="t2">int[]</span>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.util.IdentityHashMap$KeyIterator</span>
+</ul>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">sun/launcher/LauncherHelper.&lt;clinit&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.StringBuilder</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/StringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/AbstractStringBuilder.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">byte[]</span>
+</ul>
+</ul>
+</ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.&lt;init&gt;</span>
+<ul>
+<li><div>0.27% [2] &#8226; self: 0.00% [0]</div> <span class="t1">java/lang/Thread.&lt;init&gt;</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.lang.Object</span>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.getContext</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t1">java/security/AccessController.getStackAccessControlContext</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t3">JVM_GetStackAccessControlContext</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">java_security_AccessControlContext::create</span>
+<ul>
+<li><div>0.14% [1] &#8226; self: 0.00% [0]</div> <span class="t4">InstanceKlass::allocate_instance</span>
+<ul>
+<li><div class="o">0.14% [1] &#8226; self: 0.14% [1]</div> <span class="t2">java.security.AccessControlContext</span>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+</ul>
+
+        <script>
+          addClickActions();
+        </script>
+      </ul>
+    </div>
+  </body>
+</html>
