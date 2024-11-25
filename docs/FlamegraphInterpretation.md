@@ -70,7 +70,7 @@ heap utilization and wall-clock profiling to view latency.
 The various colours in a FlameGraph output with their relation to 
 underlying code for a Java application:
 
-* $\textcolor{green}{green\ :\ JIT}$
+* $\textcolor{green}{green\ :\ }$JIT
 * <span style="color:green">green</span> : JIT
 * <span style="color:aqua">aqua</span> : inlined
 * <span style="color:yellow">yellow</span> : C++
