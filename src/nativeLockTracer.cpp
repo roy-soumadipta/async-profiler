@@ -17,9 +17,9 @@ extern "C" int pthread_mutex_lock_hook(pthread_mutex_t *mutex) {
         return 0;
     }
 
-    u64 start_time = OS::nanotime();
+    u64 start_time = TSC::ticks();
     int ret = pthread_mutex_lock(mutex);
-    u64 end_time = OS::nanotime();
+    u64 end_time = TSC::ticks();
 
     NativeLockTracer::recordNativeLock(mutex, start_time, end_time);
 
